@@ -1,0 +1,6 @@
+﻿=== TODO List ===
+
+- Pure/vanilla/native JavaScript;
+- Use classList API, Dataset API;
+- Separate application logic and initial launcher's logic;
+- Extensibility.
