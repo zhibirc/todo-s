@@ -1,0 +1,249 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+html {
+	font-size: 16px;
+}
+
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-attachment: fixed;
+    font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica, Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+header {
+    font: normal 2rem/50px HelveticaNeue-Light, sans-serif;
+    height: 50px;
+    left: 0;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    width: 100%;
+}
+
+#toggle_menu {
+	cursor: pointer;
+	height: 50px;
+	margin: 0 auto;
+	width: 50px;
+}
+
+#toggle_menu.active {
+	float: left;
+	margin: 0;
+}
+
+#toggle_menu.active + .settings {
+	display: block;
+}
+
+.settings {
+	display: none;
+	float: right;
+	font-size: .7em;
+	list-style: none;
+	margin: 0;
+}
+
+.settings li {
+	cursor: pointer;
+	display: inline-block;
+	padding: 0 20px;
+}
+
+.settings li i {
+	display: none;
+}
+
+.stat {
+	border-collapse: collapse;
+	height: 30px;
+	margin-top: 50px;
+	width: 100%;
+}
+
+#sort {
+	cursor: pointer;
+}
+
+section {
+    margin: 0 auto;
+    padding-top: 30px;
+    max-width: 640px;
+}
+
+label {
+    display: block;
+    margin: 0 auto 10px;
+    width: 100%;
+}
+
+input {
+    box-sizing: border-box;
+	font-size: .875rem;
+	height: 46px;
+    padding: 5px 12px;
+    width: 91.5%;
+}
+
+button {
+    cursor: pointer;
+	float: right;
+	font-size: 20px;
+	height: 46px;
+    width: 8.48%;
+}
+
+input, button {
+	border: 0;
+}
+
+
+
+
+
+/*======================================
+		LIGHT THEME
+=======================================*/
+
+
+body.light-theme {
+	background: #D3E3B7;
+}
+
+.light-theme #toggle_menu {
+	color: #6C9247;
+}
+
+.light-theme header {
+	background: #93C85E;
+	color: #000;
+}
+
+.light-theme .settings li.active {
+	background: #D3E3B7;
+}
+
+.light-theme .settings li {
+	color: #383838;
+}
+
+.light-theme .stat {
+	border-bottom: 4px solid #93C85E;
+}
+
+.light-theme input {
+	color: #383838;
+}
+
+.light-theme button {
+	background: #EF7468;
+	color: #000;
+}
+
+.light-theme .shadow {
+	background: #BFBFBF;
+	text-decoration: line-through;
+}
+
+
+
+
+
+/*======================================
+		DARK THEME
+=======================================*/
+
+
+body.dark-theme {
+	background: #14171A;
+}
+
+.dark-theme #toggle_menu {
+	color: #20252a;
+}
+
+.dark-theme header {
+	background: #2E8B57;
+	color: #000;
+}
+
+.dark-theme .settings li.active {
+	background: #14171A;
+	color: #2E8B57;
+}
+
+.dark-theme .settings li {
+	color: #14171A;
+}
+
+.dark-theme .stat {
+	border-bottom: 4px solid #2E8B57;
+	color: #2E8B57;
+}
+
+.dark-theme input {
+	background: #20252a;
+	color: #B6B9BD;
+}
+
+.dark-theme button {
+	background: #000;
+    color: #2E8B57;
+}
+
+.dark-theme .shadow {
+	background: rgba(0, 0, 0, .4);
+	text-decoration: line-through;
+}
+
+
+
+
+
+/*======================================
+		MEDIA
+=======================================*/
+
+
+@media screen and (max-width: 1024px) {
+	.settings li {
+		padding: 0 10px;
+	}
+}
+		
+@media screen and (max-width: 800px) {
+	.settings {
+		font-size: .5em;
+	}
+	
+	
+	label {
+		width: 95%;
+	}
+}
