@@ -47,10 +47,21 @@ header {
 }
 
 #toggle_menu {
-	cursor: pointer;
 	height: 50px;
 	margin: 0 auto;
+	position: relative;
 	width: 50px;
+}
+
+#toggle_menu i {
+	cursor: pointer;
+}
+
+.fa-lock, .fa-unlock {
+	font-size: .9em;
+	left: 50px;
+	position: absolute;
+	top: 10px;
 }
 
 #toggle_menu.active {
@@ -58,11 +69,11 @@ header {
 	margin: 0;
 }
 
-#toggle_menu.active + .settings {
+#toggle_menu.active + #settings {
 	display: block;
 }
 
-.settings {
+#settings {
 	display: none;
 	float: right;
 	font-size: .7em;
@@ -70,13 +81,13 @@ header {
 	margin: 0;
 }
 
-.settings li {
+#settings li {
 	cursor: pointer;
 	display: inline-block;
 	padding: 0 20px;
 }
 
-.settings li i {
+#settings li i {
 	display: none;
 }
 
@@ -123,8 +134,13 @@ input, button {
 	border: 0;
 }
 
+.disabled {
+	pointer-events: none;
+}
 
-
+.hidden {
+	display: none;
+}
 
 
 /*======================================
@@ -145,11 +161,11 @@ body.light-theme {
 	color: #000;
 }
 
-.light-theme .settings li.active {
+.light-theme #settings li.active {
 	background: #D3E3B7;
 }
 
-.light-theme .settings li {
+.light-theme #settings li {
 	color: #383838;
 }
 
@@ -193,12 +209,12 @@ body.dark-theme {
 	color: #000;
 }
 
-.dark-theme .settings li.active {
+.dark-theme #settings li.active {
 	background: #14171A;
 	color: #2E8B57;
 }
 
-.dark-theme .settings li {
+.dark-theme #settings li {
 	color: #14171A;
 }
 
@@ -232,13 +248,13 @@ body.dark-theme {
 
 
 @media screen and (max-width: 1024px) {
-	.settings li {
+	#settings li {
 		padding: 0 10px;
 	}
 }
 		
 @media screen and (max-width: 800px) {
-	.settings {
+	#settings {
 		font-size: .5em;
 	}
 	

@@ -1,11 +1,13 @@
 var APP = {
 	db: localStorage,
 	doc: document,
+	arrayProto: Array.prototype,
     init: function () {
         'use strict';
 
         var doc = this.doc,
-			container = doc.getElementById('task_section'),
+			settingsContainer = doc.getElementById('settings'),
+			tasksContainer = doc.getElementById('task_section'),
             newItem = ['<label><input maxlength="160" data-id="', '"><button data-state="add">&plus;</button></label>'],
 			lang = (this.dbOperate('select', 'lang') || navigator.language || navigator.browserLanguage).substr(0, 2),
 			acceptedLangs = ['en', 'ru'],
@@ -14,7 +16,9 @@ var APP = {
 			storedTasks = Array(dbLen),
 			key,
 			i;
-			
+		
+		this.buildDefense(+this.dbOperate('select', 'lock'), doc, settingsContainer, tasksContainer);
+		
 		doc.body.classList.add(this.dbOperate('select', 'theme') || 'light-theme');
 		doc.querySelector('[data-theme="' + doc.body.className + '"]').classList.add('active');
 		
@@ -22,7 +26,7 @@ var APP = {
 		this.pageTranslate(doc, lang);
 
 		if (!dbLen) { // if LocalStorage database is totally empty
-			container.insertAdjacentHTML('beforeEnd', newItem.join('0'));
+			tasksContainer.insertAdjacentHTML('beforeEnd', newItem.join('0'));
 		} else {
 			for (i = 0; i < dbLen; i += 1) {
 				key = DB.key(i);
@@ -30,33 +34,35 @@ var APP = {
 					storedTasks[+key] = this.dbOperate('select', key);
 				}
 			}
-			container.insertAdjacentHTML('beforeEnd', storedTasks.join(''));
-			container.insertAdjacentHTML('beforeEnd', newItem.join(dbLen + ''));
+			tasksContainer.insertAdjacentHTML('beforeEnd', storedTasks.join(''));
+			tasksContainer.insertAdjacentHTML('beforeEnd', newItem.join(dbLen + ''));
 		}
 		
-		this.setStats(doc, container);
-		
-        container.addEventListener('click', function (e) {
-			this.todoCreate(e, doc, container, newItem);
-		}.bind(this), false);
+		this.setStats(doc, tasksContainer);
 		
 		doc.getElementById('header').addEventListener('click', function (e) {
-			this.setPrefs(e, DB, dbLen, container, newItem);
+			this.setPrefs(e, DB, dbLen, doc, settingsContainer, tasksContainer, newItem);
 		}.bind(this), false);
 		
 		doc.getElementById('sort').addEventListener('click', function (e) {
-			this.listSort(e, doc, container);
+			this.listSort(e, doc, tasksContainer);
+		}.bind(this), false);
+		
+        tasksContainer.addEventListener('click', function (e) {
+			this.todoCreate(e, doc, tasksContainer, newItem);
 		}.bind(this), false);
     },
-	setPrefs: function (event, DB, dbLen, container, newItem) {
-		var doc = this.doc,
-			target = event.target,
+	setPrefs: function (event, DB, dbLen, doc, settingsContainer, tasksContainer, newItem) {
+		var target = event.target,
 			buttonBars = doc.getElementById('toggle_menu'),
-			arrayProto = Array.prototype,
+			arrayProto = this.arrayProto,
 			hasOwn = Object.prototype.hasOwnProperty,
 			prop;
 		
 		target.classList.contains('fa-bars') && buttonBars.classList.toggle('active');
+		
+		target.classList.contains('fa-unlock') && this.buildDefense(1, doc, settingsContainer, tasksContainer);
+		target.classList.contains('fa-lock') && this.buildDefense(0, doc, settingsContainer, tasksContainer);
 		
 		if (target.tagName === 'LI') {
 			if (target.hasAttribute('data-lang') && !target.classList.contains('active')) {
@@ -72,15 +78,13 @@ var APP = {
 				arrayProto.forEach.call(doc.querySelectorAll('[data-theme]'), function (elem) {
 					elem.classList.toggle('active');
 				});
-				
-				// target.classList.add('active');
 			} else if (target.hasAttribute('data-clear')) {
 				for (prop in DB) {
 					if (hasOwn.call(DB, prop) && !isNaN(prop)) {
 						this.dbOperate('remove', prop);
 					}
 				}
-				container.innerHTML = newItem.join('0');
+				tasksContainer.innerHTML = newItem.join('0');
 			}
 		}
 	},
@@ -93,38 +97,38 @@ var APP = {
 		this.dbOperate('insert', 'theme', themeName);
 	},
 	pageTranslate: function (doc, currentLang) {
-		Array.prototype.forEach.call(doc.querySelectorAll('[data-lang-' + currentLang + ']'), function (elem) {
+		this.arrayProto.forEach.call(doc.querySelectorAll('[data-lang-' + currentLang + ']'), function (elem) {
 			// One of the fastest way nowdays to capitalize strings.
 			elem.textContent = elem.dataset['lang' + currentLang.charAt(0).toUpperCase() + currentLang.substring(1)];
 		});
 	},
-	setStats: function (doc, container) {
+	setStats: function (doc, tasksContainer) {
 		var totalCell = doc.getElementById('stat_total'),
 			doneCell = doc.getElementById('stat_done'),
 			planCell = doc.getElementById('stat_plan'),
-			total = totalCell.textContent = container.childNodes.length - 1,
-			done = doneCell.textContent = container.querySelectorAll('button[data-state="X"]').length;
+			total = totalCell.textContent = tasksContainer.childNodes.length - 1,
+			done = doneCell.textContent = tasksContainer.querySelectorAll('button[data-state="X"]').length;
 			
 		planCell.textContent = total - done;
 	},
-	listSort: function (event, doc, container) {
+	listSort: function (event, doc, tasksContainer) {
 		var target = event.target, 
-			doneTasks = container.querySelectorAll('label[data-state="X"]'),
+			doneTasks = tasksContainer.querySelectorAll('label[data-state="X"]'),
 			fragment = doc.createDocumentFragment();
 		
-		Array.prototype.forEach.call(doneTasks, function (elem) {
+		this.arrayProto.forEach.call(doneTasks, function (elem) {
 			fragment.appendChild(elem);
 		});
 			
 		if (!target.dataset.state || target.dataset.state === 'asc') {
-			container.insertBefore(fragment, container.firstChild);
+			tasksContainer.insertBefore(fragment, tasksContainer.firstChild);
 			target.dataset.state = 'desc';
 		} else {
-			container.insertBefore(fragment, container.lastChild);
+			tasksContainer.insertBefore(fragment, tasksContainer.lastChild);
 			target.dataset.state = 'asc';
 		}
 	},
-	todoCreate: function (event, doc, container, newItem) {
+	todoCreate: function (event, doc, tasksContainer, newItem) {
 		var target = event.target,
 			item = target.parentNode,
             input = target.previousSibling,
@@ -138,7 +142,7 @@ var APP = {
 		case 'add':
 			target.textContent = '−';
 			target.dataset.state = 'done';
-			container.insertAdjacentHTML('beforeEnd', newItem.join(this.db.length + ''));
+			tasksContainer.insertAdjacentHTML('beforeEnd', newItem.join(this.db.length + ''));
 			input.setAttribute('value', input.value);
 			input.dataset.id = this.db.length;
 			this.dbOperate('insert', this.db.length, item.outerHTML);
@@ -155,7 +159,34 @@ var APP = {
 			this.dbOperate('remove', input.dataset.id);
 		}
 		
-		this.setStats(doc, container);
+		this.setStats(doc, tasksContainer);
+	},
+	buildDefense: function (flag, doc, settingsContainer, tasksContainer) {
+		var lockIcon = doc.querySelector('.fa-lock'),
+			unlockIcon = doc.querySelector('.fa-unlock'),
+			menuIcon = doc.querySelector('.fa-bars'),
+			sortIcon = doc.getElementById('sort');
+			
+		if (flag === 1) {
+			unlockIcon.classList.add('hidden');
+			lockIcon.classList.remove('hidden');
+			
+			[menuIcon, settingsContainer, sortIcon, tasksContainer].forEach(function (elem) {
+				elem.classList.add('disabled');
+			});
+			
+			this.dbOperate('insert', 'lock', 1);
+		} else if (flag === 0) {
+			unlockIcon.classList.remove('hidden');
+			lockIcon.classList.add('hidden');
+			
+			[menuIcon, settingsContainer, sortIcon, tasksContainer].forEach(function (elem) {
+				elem.classList.remove('disabled');
+			});
+			
+			this.dbOperate('insert', 'lock', 0);
+		}
+		
 	},
 	dbOperate: function (operation, key, value) {
 		var DB = this.db;
