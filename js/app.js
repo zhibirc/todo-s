@@ -1,3 +1,8 @@
+/**
+ *	@file Todo-s application.
+ *	@author zhibirc
+ *	@version 1.2.0
+ */
 var APP = {
 	db: localStorage,
 	doc: document,
@@ -161,6 +166,10 @@ var APP = {
 		
 		this.setStats(doc, tasksContainer);
 	},
+	/**
+	 *	Provides option to lock/unlock UI.
+	 *	@since 1.2.0
+	 */
 	buildDefense: function (flag, doc, settingsContainer, tasksContainer) {
 		var lockIcon = doc.querySelector('.fa-lock'),
 			unlockIcon = doc.querySelector('.fa-unlock'),
