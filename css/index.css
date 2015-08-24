@@ -134,6 +134,39 @@ input, button {
 	border: 0;
 }
 
+#overlay {
+	background: rgba(0, 0, 0, .6);
+	display: none;
+	height: 100%;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+}
+
+#lang_list {
+	height: 150px;
+	left: 50%;
+	margin-left: -150px;
+	overflow: auto;
+	position: absolute;
+	width: 300px;
+	z-index: 1001;
+}
+
+#lang_list p {
+	cursor: pointer;
+	height: 30px;
+	line-height: 30px;
+	margin: 0;
+	padding-left: 10px;
+}
+
+#lang_list p:last-child {
+	border-bottom: 0 !important;
+}
+
 .disabled {
 	pointer-events: none;
 }
@@ -158,7 +191,6 @@ body.light-theme {
 
 .light-theme header {
 	background: #93C85E;
-	color: #000;
 }
 
 .light-theme #settings li.active {
@@ -185,6 +217,15 @@ body.light-theme {
 .light-theme .shadow {
 	background: #BFBFBF;
 	text-decoration: line-through;
+}
+
+.light-theme #lang_list {
+	background: #D9F5B7;
+}
+
+.light-theme #lang_list p {
+	border-bottom: 1px dashed #383838;
+	color: #383838;
 }
 
 

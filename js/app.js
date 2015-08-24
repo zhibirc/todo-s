@@ -4,9 +4,19 @@
  *	@version 1.2.0
  */
 var APP = {
+	// Save shorthand and quickly access link to the localStorage object.
 	db: localStorage,
+	// Save shorthand and quickly access link to the document object.
+	// As for this technique it significantly increases performance when we want to get acccess to the DOM or BOM.
 	doc: document,
+	// Save shorthand and quickly access link to the Array.prototype object (helpful for using its methods).
 	arrayProto: Array.prototype,
+	/**
+	 *	Initialization method of service variables, events and startup preferences of an app.
+	 *	@since 1.0.0
+	 *	@access public
+	 *	@this APP
+	 */
     init: function () {
         'use strict';
 
@@ -58,6 +68,8 @@ var APP = {
 		}.bind(this), false);
     },
 	setPrefs: function (event, DB, dbLen, doc, settingsContainer, tasksContainer, newItem) {
+		'use strict';
+		
 		var target = event.target,
 			buttonBars = doc.getElementById('toggle_menu'),
 			arrayProto = this.arrayProto,
@@ -94,6 +106,8 @@ var APP = {
 		}
 	},
 	changeTheme: function (newStyle) {
+		'use strict';
+		
 		var themeName = newStyle + '-theme',
 			docBody = this.doc.body;
 		
@@ -102,12 +116,16 @@ var APP = {
 		this.dbOperate('insert', 'theme', themeName);
 	},
 	pageTranslate: function (doc, currentLang) {
+		'use strict';
+		
 		this.arrayProto.forEach.call(doc.querySelectorAll('[data-lang-' + currentLang + ']'), function (elem) {
 			// One of the fastest way nowdays to capitalize strings.
 			elem.textContent = elem.dataset['lang' + currentLang.charAt(0).toUpperCase() + currentLang.substring(1)];
 		});
 	},
 	setStats: function (doc, tasksContainer) {
+		'use strict';
+		
 		var totalCell = doc.getElementById('stat_total'),
 			doneCell = doc.getElementById('stat_done'),
 			planCell = doc.getElementById('stat_plan'),
@@ -117,6 +135,8 @@ var APP = {
 		planCell.textContent = total - done;
 	},
 	listSort: function (event, doc, tasksContainer) {
+		'use strict';
+		
 		var target = event.target, 
 			doneTasks = tasksContainer.querySelectorAll('label[data-state="X"]'),
 			fragment = doc.createDocumentFragment();
@@ -134,6 +154,8 @@ var APP = {
 		}
 	},
 	todoCreate: function (event, doc, tasksContainer, newItem) {
+		'use strict';
+		
 		var target = event.target,
 			item = target.parentNode,
             input = target.previousSibling,
@@ -171,6 +193,8 @@ var APP = {
 	 *	@since 1.2.0
 	 */
 	buildDefense: function (flag, doc, settingsContainer, tasksContainer) {
+		'use strict';
+		
 		var lockIcon = doc.querySelector('.fa-lock'),
 			unlockIcon = doc.querySelector('.fa-unlock'),
 			menuIcon = doc.querySelector('.fa-bars'),
@@ -198,6 +222,8 @@ var APP = {
 		
 	},
 	dbOperate: function (operation, key, value) {
+		'use strict';
+		
 		var DB = this.db;
 		
 		switch (operation) {
