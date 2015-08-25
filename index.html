@@ -1,24 +1,4 @@
 <!DOCTYPE html>
-<!--
-    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
-
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
     <head>
         <meta charset="utf-8" />
@@ -38,11 +18,10 @@
 				<i class="fa fa-lock hidden"></i>
 			</div>
 			<ul id="settings">
-				<li data-lang="en" data-lang-en="English" data-lang-ru="Английский">English</li>
-				<li data-lang="ru" data-lang-en="Russian" data-lang-ru="Русский">Русский</li>
-				<li data-theme="light-theme" data-lang-en="Light theme" data-lang-ru="Светлая тема"><!-- <i class="fa fa-circle-thin"> --></i>Светлая тема</li>
-				<li data-theme="dark-theme" data-lang-en="Dark theme" data-lang-ru="Темная тема"><!-- <i class="fa fa-circle"></i> -->Темная тема</li>
-				<li data-clear="" data-lang-en="Clear list" data-lang-ru="Очистить список">Очистить список</li>
+				<li data-lang-switch="" data-lang-en="Language" data-lang-de="Sprache" data-lang-ru="Язык">Язык</li>
+				<li data-theme="light-theme" data-lang-en="Light theme" data-lang-de="Licht Thema" data-lang-ru="Светлая тема"><!-- <i class="fa fa-circle-thin"> --></i>Светлая тема</li>
+				<li data-theme="dark-theme" data-lang-en="Dark theme" data-lang-de="Dunkles Thema" data-lang-ru="Темная тема"><!-- <i class="fa fa-circle"></i> -->Темная тема</li>
+				<li data-clear="" data-lang-en="Clear list" data-lang-de="Liste löschen" data-lang-ru="Очистить список">Очистить список</li>
 			</ul>
 		</header>
 		<table class="stat">
@@ -61,17 +40,17 @@
 
 		<section id="task_section"></section>
 		
-		<div id="overlay"></div>
-		<div id="lang_list">
-			<p>Английский (<strong>en</strong>)</p>
-			<p>Белорусский (<strong>be</strong>)</p>
-			<p>Иврит (<strong>iw</strong>)</p>
-			<p>Испанский (<strong>es</strong>)</p>
-			<p>Немецкий (<strong>de</strong>)</p>
-			<p>Русский (<strong>ru</strong>)</p>
-			<p>Украинский (<strong>uk</strong>)</p>
-			<p>Финский (<strong>fi</strong>)</p>
-			<p>Французский (<strong>fr</strong>)</p>
+		<div id="overlay" class="hidden"></div>
+		<div id="popup" class="hidden" data-aim="lang">
+			<p data-lang="en" data-lang-en="English" data-lang-ru="Английский">Английский (<strong>en</strong>)</p>
+			<p data-lang="be" data-lang-ru="Белорусский">Белорусский (<strong>be</strong>)</p>
+			<p data-lang="iw" data-lang-ru="Иврит">Иврит (<strong>iw</strong>)</p>
+			<p data-lang="es" data-lang-ru="Испанский">Испанский (<strong>es</strong>)</p>
+			<p data-lang="de" data-lang-ru="Немецкий">Немецкий (<strong>de</strong>)</p>
+			<p data-lang="ru" data-lang-en="Russian" data-lang-ru="Русский">Русский (<strong>ru</strong>)</p>
+			<p data-lang="uk" data-lang-ru="Украинский">Украинский (<strong>uk</strong>)</p>
+			<p data-lang="fi" data-lang-ru="Финский">Финский (<strong>fi</strong>)</p>
+			<p data-lang="fr" data-lang-ru="Французский">Французский (<strong>fr</strong>)</p>
 		</div>
 		
         <script type="text/javascript" src="cordova.js"></script>

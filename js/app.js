@@ -14,7 +14,7 @@ var APP = (function () {
 		doc: document,
 		// Save shorthand and quickly access link to the Array.prototype object (helpful for using its methods).
 		arrayProto: Array.prototype,
-		setPrefs: function (event, DB, dbLen, doc, settingsContainer, tasksContainer, newItem) {
+		setPrefs: function (event, DB, dbLen, doc, settingsContainer, tasksContainer, overlay, popup, newItem) {
 			var target = event.target,
 				buttonBars = doc.getElementById('toggle_menu'),
 				arrayProto = this.arrayProto,
@@ -27,13 +27,10 @@ var APP = (function () {
 			target.classList.contains('fa-lock') && this.buildDefense(0, doc, settingsContainer, tasksContainer);
 			
 			if (target.tagName === 'LI') {
-				if (target.hasAttribute('data-lang') && !target.classList.contains('active')) {
-					arrayProto.forEach.call(doc.querySelectorAll('[data-lang]'), function (elem) {
-						elem.classList.toggle('active');
-					});
-					
-					this.dbOperate('insert', 'lang', target.dataset.lang);
-					this.pageTranslate(doc, target.dataset.lang);
+				if (target.hasAttribute('data-lang-switch')) {
+					overlay.classList.remove('hidden');
+					popup.classList.remove('hidden');
+					popup.dataset.aim = 'lang';
 				} else if (target.hasAttribute('data-theme') && !target.classList.contains('active')) {
 					this.changeTheme(target.dataset.langEn.split(' ')[0].toLowerCase());
 					
@@ -47,6 +44,7 @@ var APP = (function () {
 						}
 					}
 					tasksContainer.innerHTML = newItem.join('0');
+					this.setStats(doc, tasksContainer);
 				}
 			}
 		},
@@ -154,6 +152,22 @@ var APP = (function () {
 			}
 			
 		},
+		popupWork: function (event, doc, overlay, popup) {
+			var target = event.target,
+				popupAim = popup.dataset.aim;
+				
+				if (popupAim ==='lang') {
+					this.dbOperate('insert', 'lang', target.dataset.lang);
+					this.pageTranslate(doc, target.dataset.lang);
+					this.arrayProto.forEach.call(doc.querySelectorAll('[data-lang]'), function (elem) {
+						elem.classList.remove('active');
+					});
+					target.classList.add('active');
+				}
+				overlay.classList.add('hidden');
+				popup.classList.add('hidden');
+				popup.dataset.aim = '';
+		},
 		dbOperate: function (operation, key, value) {
 			var DB = this.db;
 			
@@ -188,6 +202,10 @@ var APP = (function () {
 				settingsContainer = doc.getElementById('settings'),
 				// Container for todo-items.
 				tasksContainer = doc.getElementById('task_section'),
+				// Universal popup window for multiple purposes.
+				popup = doc.getElementById('popup'),
+				// Popup's overlay.
+				overlay = doc.getElementById('overlay'),
 				// Template for new empty "todo" text fields. It can be joined with one mutable part of an item - its id.
 				newItem = ['<label><input maxlength="160" data-id="', '"><button data-state="add">&plus;</button></label>'],
 				// Check possible places for preferred language with priority of user selection in app menu.
@@ -205,11 +223,17 @@ var APP = (function () {
 				// Cycle counter.
 				i;
 			
-			if (+app.dbOperate('select', 'init')) return;
-			
+			// Check that the app is loaded/initialized and its init() method is called.
+			// It's needed to prevent unnecessary init() invocations and hence unexpected behaviour.
+			// First variant (presumably slower than the next one).
+			//if (+app.dbOperate('select', 'init')) return;
+			// Second variant, use functions as objects.
+			if (this.init._init) return;
+			// Set lock/unlock state of an app in according to saved user preferences in the previous session.
 			app.buildDefense(+app.dbOperate('select', 'lock'), doc, settingsContainer, tasksContainer);
-			
+			// Set theme of an app in according to saved user preferences in the previous session or to default theme.
 			doc.body.classList.add(app.dbOperate('select', 'theme') || 'light-theme');
+			// Set state of the particular menu item (theme selection) in active.
 			doc.querySelector('[data-theme="' + doc.body.className + '"]').classList.add('active');
 			
 			doc.querySelector('[data-lang="' + (~acceptedLangs.indexOf(lang) ? lang : 'en') + '"]').classList.add('active');
@@ -231,7 +255,7 @@ var APP = (function () {
 			app.setStats(doc, tasksContainer);
 			
 			doc.getElementById('header').addEventListener('click', function (e) {
-				app.setPrefs(e, DB, dbLen, doc, settingsContainer, tasksContainer, newItem);
+				app.setPrefs(e, DB, dbLen, doc, settingsContainer, tasksContainer, overlay, popup, newItem);
 			}, false);
 			
 			doc.getElementById('sort').addEventListener('click', function (e) {
@@ -242,11 +266,11 @@ var APP = (function () {
 				app.todoCreate(e, doc, tasksContainer, newItem);
 			}, false);
 			
-			window.addEventListener('unload', function (e) {
-				app.dbOperate('update', 'init', '0');
+			popup.addEventListener('click', function (e) {
+				app.popupWork(e, doc, overlay, popup);
 			}, false);
 			
-			app.dbOperate('insert', 'init', '1');
+			this.init._init = 1;
 		}
     };
 }());
