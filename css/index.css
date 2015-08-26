@@ -144,6 +144,42 @@ input, button {
 	padding-left: 10px;
 }
 
+#popup p:nth-child(1):after {
+	content: " (en)";
+}
+
+#popup p:nth-child(2):after {
+	content: " (be)";
+}
+
+#popup p:nth-child(3):after {
+	content: " (iw)";
+}
+
+#popup p:nth-child(4):after {
+	content: " (es)";
+}
+
+#popup p:nth-child(5):after {
+	content: " (de)";
+}
+
+#popup p:nth-child(6):after {
+	content: " (ru)";
+}
+
+#popup p:nth-child(7):after {
+	content: " (uk)";
+}
+
+#popup p:nth-child(8):after {
+	content: " (fi)";
+}
+
+#popup p:nth-child(9):after {
+	content: " (fr)";
+}
+
 #popup p:last-child {
 	border-bottom: 0 !important;
 }
