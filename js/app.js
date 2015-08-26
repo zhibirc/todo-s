@@ -255,18 +255,22 @@ var APP = (function () {
 			app.setStats(doc, tasksContainer);
 			
 			doc.getElementById('header').addEventListener('click', function (e) {
+				e.stopPropagation();
 				app.setPrefs(e, DB, dbLen, doc, settingsContainer, tasksContainer, overlay, popup, newItem);
 			}, false);
 			
 			doc.getElementById('sort').addEventListener('click', function (e) {
+				e.stopPropagation();
 				app.listSort(e, doc, tasksContainer);
 			}, false);
 			
 			tasksContainer.addEventListener('click', function (e) {
+				e.stopPropagation();
 				app.todoCreate(e, doc, tasksContainer, newItem);
 			}, false);
 			
 			popup.addEventListener('click', function (e) {
+				e.stopPropagation();
 				app.popupWork(e, doc, overlay, popup);
 			}, false);
 			

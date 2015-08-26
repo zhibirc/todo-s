@@ -232,7 +232,6 @@ body.dark-theme {
 
 .dark-theme header {
 	background: #2E8B57;
-	color: #000;
 }
 
 .dark-theme #settings li.active {
@@ -262,6 +261,20 @@ body.dark-theme {
 .dark-theme .shadow {
 	background: rgba(0, 0, 0, .4);
 	text-decoration: line-through;
+}
+
+.dark-theme #popup {
+	background: #2E8B57;
+}
+
+.dark-theme #popup p {
+	border-bottom: 1px dashed #14171A;
+	color: #14171A;
+}
+
+.dark-theme #popup p.active {
+	background: #14171A;
+	color: #2E8B57;
 }
 
 
