@@ -126,9 +126,9 @@ var APP = (function () {
 		 *	@since 1.2.0
 		 */
 		buildDefense: function (flag, doc, settingsContainer, tasksContainer) {
-			var lockIcon = doc.querySelector('.fa-lock'),
-				unlockIcon = doc.querySelector('.fa-unlock'),
-				menuIcon = doc.querySelector('.fa-bars'),
+			var lockIcon = doc.getElementById('fa_lock'),
+				unlockIcon = doc.getElementById('fa_unlock'),
+				menuIcon = doc.getElementById('fa_bars'),
 				sortIcon = doc.getElementById('sort');
 				
 			if (flag === 1) {

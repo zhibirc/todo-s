@@ -39,7 +39,7 @@ header {
 	cursor: pointer;
 }
 
-.fa-lock, .fa-unlock {
+#fa_lock, #fa_unlock {
 	font-size: .9em;
 	left: 50px;
 	position: absolute;
@@ -73,7 +73,7 @@ header {
 	display: none;
 }
 
-.stat {
+#stat {
 	border-collapse: collapse;
 	height: 30px;
 	margin-top: 50px;
@@ -218,7 +218,7 @@ body.light-theme {
 	color: #383838;
 }
 
-.light-theme .stat {
+.light-theme #stat {
 	border-bottom: 4px solid #93C85E;
 }
 
@@ -279,7 +279,7 @@ body.dark-theme {
 	color: #14171A;
 }
 
-.dark-theme .stat {
+.dark-theme #stat {
 	border-bottom: 4px solid #2E8B57;
 	color: #2E8B57;
 }
