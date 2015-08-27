@@ -12,14 +12,12 @@ var APP = (function () {
 		// Save shorthand and quickly access link to the document object.
 		// As for this technique it significantly increases performance when we want to get acccess to the DOM or BOM.
 		doc: document,
-		// Save shorthand and quickly access link to the Array.prototype object (helpful for using its methods).
-		arrayProto: Array.prototype,
 		setPrefs: function (event, DB, dbLen, doc, settingsContainer, tasksContainer, overlay, popup, newItem) {
 			var target = event.target,
 				buttonBars = doc.getElementById('toggle_menu'),
-				arrayProto = this.arrayProto,
 				hasOwn = Object.prototype.hasOwnProperty,
-				prop;
+				themeItems,
+				i;
 			
 			target.classList.contains('fa-bars') && buttonBars.classList.toggle('active');
 			
@@ -32,15 +30,18 @@ var APP = (function () {
 					popup.classList.remove('hidden');
 					popup.dataset.aim = 'lang';
 				} else if (target.hasAttribute('data-theme') && !target.classList.contains('active')) {
+					themeItems = doc.querySelectorAll('[data-theme]');
+					i = themeItems.length;
+					
 					this.changeTheme(target.dataset.langEn.split(' ')[0].toLowerCase());
 					
-					arrayProto.forEach.call(doc.querySelectorAll('[data-theme]'), function (elem) {
-						elem.classList.toggle('active');
-					});
+					while (i--) {
+						themeItems[i].classList.toggle('active');
+					}
 				} else if (target.hasAttribute('data-clear')) {
-					for (prop in DB) {
-						if (hasOwn.call(DB, prop) && !isNaN(prop)) {
-							this.dbOperate('remove', prop);
+					for (i in DB) {
+						if (hasOwn.call(DB, i) && !isNaN(i)) {
+							this.dbOperate('remove', i);
 						}
 					}
 					tasksContainer.innerHTML = newItem.join('0');
@@ -57,10 +58,15 @@ var APP = (function () {
 			this.dbOperate('insert', 'theme', themeName);
 		},
 		pageTranslate: function (doc, currentLang) {
-			this.arrayProto.forEach.call(doc.querySelectorAll('[data-lang-' + currentLang + ']'), function (elem) {
+			var elems = doc.querySelectorAll('[data-lang-' + currentLang + ']'),
+				i = elems.length,
+				elem;
+			
+			while (i--) {
+				elem = elems[i];
 				// One of the fastest way nowdays to capitalize strings.
 				elem.textContent = elem.dataset['lang' + currentLang.charAt(0).toUpperCase() + currentLang.substring(1)];
-			});
+			}
 		},
 		setStats: function (doc, tasksContainer) {
 			var totalCell = doc.getElementById('stat_total'),
@@ -226,9 +232,9 @@ var APP = (function () {
 			// Check that the app is loaded/initialized and its init() method is called.
 			// It's needed to prevent unnecessary init() invocations and hence unexpected behaviour.
 			// First variant (presumably slower than the next one).
-			//if (+app.dbOperate('select', 'init')) return;
+			//if (+app.dbOperate('select', 'executed')) return;
 			// Second variant, use functions as objects.
-			if (this.init._init) return;
+			if (this.init.executed) return;
 			// Set lock/unlock state of an app in according to saved user preferences in the previous session.
 			app.buildDefense(+app.dbOperate('select', 'lock'), doc, settingsContainer, tasksContainer);
 			// Set theme of an app in according to saved user preferences in the previous session or to default theme.
@@ -239,7 +245,8 @@ var APP = (function () {
 			doc.querySelector('[data-lang="' + (~acceptedLangs.indexOf(lang) ? lang : 'en') + '"]').classList.add('active');
 			app.pageTranslate(doc, lang);
 
-			if (!dbLen) { // if LocalStorage database is totally empty
+			// If localStorage database is totally empty.
+			if (!dbLen) {
 				tasksContainer.insertAdjacentHTML('beforeEnd', newItem.join('0'));
 			} else {
 				for (i = 0; i < dbLen; i += 1) {
@@ -274,7 +281,7 @@ var APP = (function () {
 				app.popupWork(e, doc, overlay, popup);
 			}, false);
 			
-			this.init._init = 1;
+			this.init.executed = 1;
 		}
     };
 }());
