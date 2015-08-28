@@ -164,12 +164,13 @@ var APP = (function () {
 			var target = event.target,
 				popupAim = popup.dataset.aim;
 				
-				if (popupAim ==='lang') {
+				if (popupAim ==='lang' && !target.classList.contains('active')) {
 					this.dbOperate('insert', 'lang', target.dataset.lang);
 					this.pageTranslate(doc, target.dataset.lang);
 					popup.querySelector('.active').classList.remove('active');
 					target.classList.add('active');
 				}
+				
 				overlay.classList.add('hidden');
 				popup.classList.add('hidden');
 				popup.dataset.aim = '';
