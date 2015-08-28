@@ -80,11 +80,13 @@ var APP = (function () {
 		listSort: function (event, doc, tasksContainer) {
 			var target = event.target, 
 				doneTasks = tasksContainer.querySelectorAll('label[data-state="X"]'),
-				fragment = doc.createDocumentFragment();
+				doneTasksLen = doneTasks.length,
+				fragment = doc.createDocumentFragment(),
+				i;
 			
-			this.arrayProto.forEach.call(doneTasks, function (elem) {
-				fragment.appendChild(elem);
-			});
+			for (i = 0; i < doneTasksLen; i += 1) {
+				fragment.appendChild(doneTasks[i]);
+			}
 				
 			if (!target.dataset.state || target.dataset.state === 'asc') {
 				tasksContainer.insertBefore(fragment, tasksContainer.firstChild);
@@ -165,9 +167,7 @@ var APP = (function () {
 				if (popupAim ==='lang') {
 					this.dbOperate('insert', 'lang', target.dataset.lang);
 					this.pageTranslate(doc, target.dataset.lang);
-					this.arrayProto.forEach.call(doc.querySelectorAll('[data-lang]'), function (elem) {
-						elem.classList.remove('active');
-					});
+					popup.querySelector('.active').classList.remove('active');
 					target.classList.add('active');
 				}
 				overlay.classList.add('hidden');
