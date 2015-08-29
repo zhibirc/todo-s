@@ -218,7 +218,7 @@ var APP = (function () {
 				// Check possible places for preferred language with priority of user selection in app menu.
 				lang = (app.dbOperate('select', 'lang') || navigator.language || navigator.browserLanguage).substr(0, 2),
 				// List of currently accepted languages (in language codes).
-				acceptedLangs = ['en', 'be', 'iw', 'es', 'de', 'ru', 'uk', 'fi', 'fr'],
+				acceptedLangs = ['be', 'de', 'en', 'es', 'iw', 'ru', 'uk', 'fi', 'fr'],
 				// Store link to the localStorage from object in external scope.
 				DB = app.db,
 				// Get value of localStorage built-in "length" property.
@@ -242,16 +242,22 @@ var APP = (function () {
 			doc.body.classList.add(app.dbOperate('select', 'theme') || 'light-theme');
 			// Set state of the particular menu item (theme selection) in active.
 			doc.querySelector('[data-theme="' + doc.body.className + '"]').classList.add('active');
-			
+			// If preferred language in any way (see "lang" variable above) exists in the preset of available translations,
+			// or english as the default in this case, set its item in language menu to active state.
 			doc.querySelector('[data-lang="' + (~acceptedLangs.indexOf(lang) ? lang : 'en') + '"]').classList.add('active');
+			// Translate the page in according to selected language.
 			app.pageTranslate(doc, lang);
 
 			// If localStorage database is totally empty.
 			if (!dbLen) {
+				// Just insert one empty textfield in the task list.
 				tasksContainer.insertAdjacentHTML('beforeEnd', newItem.join('0'));
 			} else {
+				// Use for-loop for best performance.
 				for (i = 0; i < dbLen; i += 1) {
+					// Get a key by escalating integer number.
 					key = DB.key(i);
+					// If key we got on the previous step is a valid number as a string (including 0).
 					if (!isNaN(key)) {
 						storedTasks[+key] = app.dbOperate('select', key);
 					}
@@ -259,10 +265,11 @@ var APP = (function () {
 				tasksContainer.insertAdjacentHTML('beforeEnd', storedTasks.join(''));
 				tasksContainer.insertAdjacentHTML('beforeEnd', newItem.join(dbLen + ''));
 			}
-			
+			// Set tasks statistics: "total", "done", "planned".
 			app.setStats(doc, tasksContainer);
 			
 			doc.getElementById('header').addEventListener('click', function (e) {
+				// Stop event bubbling to the parent nodes (increase performance and prevent unnecessary triggering).
 				e.stopPropagation();
 				app.setPrefs(e, DB, dbLen, doc, settingsContainer, tasksContainer, overlay, popup, newItem);
 			}, false);
@@ -281,7 +288,7 @@ var APP = (function () {
 				e.stopPropagation();
 				app.popupWork(e, doc, overlay, popup);
 			}, false);
-			
+			// After initialization of an app change its status to prevent multiple invocations.
 			this.init.executed = 1;
 		}
     };
