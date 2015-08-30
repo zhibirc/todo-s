@@ -145,15 +145,15 @@ input, button {
 }
 
 #popup p:nth-child(1):after {
-	content: " (en)";
-}
-
-#popup p:nth-child(2):after {
 	content: " (be)";
 }
 
+#popup p:nth-child(2):after {
+	content: " (de)";
+}
+
 #popup p:nth-child(3):after {
-	content: " (iw)";
+	content: " (en)";
 }
 
 #popup p:nth-child(4):after {
@@ -161,7 +161,7 @@ input, button {
 }
 
 #popup p:nth-child(5):after {
-	content: " (de)";
+	content: " (iw)";
 }
 
 #popup p:nth-child(6):after {

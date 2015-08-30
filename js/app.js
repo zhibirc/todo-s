@@ -250,7 +250,7 @@ var APP = (function () {
 
 			// If localStorage database is totally empty.
 			if (!dbLen) {
-				// Just insert one empty textfield in the task list.
+				// Just insert one empty text field in the task list.
 				tasksContainer.insertAdjacentHTML('beforeEnd', newItem.join('0'));
 			} else {
 				// Use for-loop for best performance.
@@ -259,31 +259,38 @@ var APP = (function () {
 					key = DB.key(i);
 					// If key we got on the previous step is a valid number as a string (including 0).
 					if (!isNaN(key)) {
+						// Fill the predefined array with stored tasks.
 						storedTasks[+key] = app.dbOperate('select', key);
 					}
 				}
+				// And add this joined array to the tasks section as a whole piece of HTML.
 				tasksContainer.insertAdjacentHTML('beforeEnd', storedTasks.join(''));
+				// And finalize the list with empty text field.
 				tasksContainer.insertAdjacentHTML('beforeEnd', newItem.join(dbLen + ''));
 			}
 			// Set tasks statistics: "total", "done", "planned".
 			app.setStats(doc, tasksContainer);
 			
+			// Header section of the app.
 			doc.getElementById('header').addEventListener('click', function (e) {
 				// Stop event bubbling to the parent nodes (increase performance and prevent unnecessary triggering).
 				e.stopPropagation();
 				app.setPrefs(e, DB, dbLen, doc, settingsContainer, tasksContainer, overlay, popup, newItem);
 			}, false);
 			
+			// Switcher for sorting.
 			doc.getElementById('sort').addEventListener('click', function (e) {
 				e.stopPropagation();
 				app.listSort(e, doc, tasksContainer);
 			}, false);
 			
+			// Section of tasks.
 			tasksContainer.addEventListener('click', function (e) {
 				e.stopPropagation();
 				app.todoCreate(e, doc, tasksContainer, newItem);
 			}, false);
 			
+			// Popup.
 			popup.addEventListener('click', function (e) {
 				e.stopPropagation();
 				app.popupWork(e, doc, overlay, popup);
