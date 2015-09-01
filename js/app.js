@@ -12,10 +12,11 @@ var APP = (function () {
 		// Save shorthand and quickly access link to the document object.
 		// As for this technique it significantly increases performance when we want to get acccess to the DOM or BOM.
 		doc: document,
+		objProto: Object.prototype,
 		setPrefs: function (event, DB, dbLen, doc, settingsContainer, tasksContainer, overlay, popup, newItem) {
 			var target = event.target,
 				buttonBars = doc.getElementById('toggle_menu'),
-				hasOwn = Object.prototype.hasOwnProperty,
+				hasOwn = this.objProto.hasOwnProperty,
 				themeItems,
 				i;
 			
@@ -197,6 +198,31 @@ var APP = (function () {
 	return {
 		/**
 		 *	Public API of the app.
+		 */
+		
+		/**
+		 *	Uniform method for extending functionality of the app.
+		 *	@since 1.2.0
+		 *	@access public
+		 *	@this APP
+		 */
+		 extend: function (staff) {
+			 // Save a link to the object from external scope to local variable for future efficient usage.
+			 var app = app,
+				 hasOwn = app.objProto.hasOwnProperty,
+				 prop;
+			 
+			 // If correct non-empty object is passed.
+			 if (staff && app.objProto.toString.call(staff).slice(8, -1) === 'Object' && Object.keys(staff).length > 0) {
+				 for (prop in staff) {
+					 if (hasOwn.call(staff, prop)) {
+						 app[prop] = staff[prop];
+					 }
+				 }
+			 }
+		 },
+		 
+		/**
 		 *	Initialization method of service variables, events and startup preferences of an app.
 		 *	@since 1.0.0
 		 *	@access public

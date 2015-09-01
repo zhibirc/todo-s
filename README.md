@@ -17,6 +17,29 @@ This app can work both in a web browser or compile into mobile app using PhoneGa
 - all existing tasks are stored locally and are restored when the application starts;
 - user preferences are stored like tasks.
 
+## API
+
+### init()
+
+Initializes the application. Invoke it once (in addition, inner mechanism prevents repeated invocations) when DOM tree is ready.
+
+```javascript
+APP.init();
+```
+
+### extend()
+
+Uniform way to add new functionality to the app.
+
+```javascript
+APP.extend({
+	newProperty: 'value',
+	newMethod: function () {
+		// code here
+	}
+});
+```
+
 ## Notes
 
 - sources are documented in details so minification before usage in production code is recommended;
