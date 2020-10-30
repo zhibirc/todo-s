@@ -1,3 +1,7 @@
+@import "font-awesome.css";
+@import "login.css";
+@import "not-found.css";
+
 * {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
 }
@@ -327,13 +331,13 @@ body.dark-theme {
 		padding: 0 10px;
 	}
 }
-		
+
 @media screen and (max-width: 800px) {
 	#settings {
 		font-size: .5em;
 	}
-	
-	
+
+
 	label {
 		width: 95%;
 	}
