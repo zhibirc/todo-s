@@ -6,8 +6,27 @@
         <meta name="msapplication-tap-highlight" content="no">
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi">
-		<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="manifest" href="manifest.json">
+
+        <link rel="stylesheet" type="text/css" href="src/css/font-awesome.css">
+        <link rel="stylesheet" type="text/css" href="src/css/index.css">
+
         <title>Todo-s</title>
     </head>
     <body>
@@ -39,7 +58,7 @@
 		</table>
 
 		<section id="task_section"></section>
-		
+
 		<div id="overlay" class="hidden"></div>
 		<div id="popup" class="hidden" data-aim="lang">
 			<p data-lang="be" data-lang-be="Беларуская" data-lang-de="Belarussisch" data-lang-en="Belarusian" data-lang-es="Bielorruso" data-lang-iw="הביילורוסית" data-lang-ru="Белорусский" data-lang-uk="Білоруська" data-lang-fi="Valkovenäjä" data-lang-fr="Biélorusse">Белорусский</p>
@@ -52,11 +71,10 @@
 			<p data-lang="fi" data-lang-be="Фінская" data-lang-de="Finnisch" data-lang-en="Finnish" data-lang-es="Finlandés" data-lang-iw="פיני" data-lang-ru="Финский" data-lang-uk="Фінська" data-lang-fi="Suomi" data-lang-fr="Finnois">Финский</p>
 			<p data-lang="fr" data-lang-be="Французская" data-lang-de="Französisch" data-lang-en="French" data-lang-es="Francés" data-lang-iw="צרפתי" data-lang-ru="Французский" data-lang-uk="Французька" data-lang-fi="Ranska" data-lang-fr="Français">Французский</p>
 		</div>
-		
-        <script type="text/javascript" src="cordova.js"></script>
-		<script type="text/javascript" src="js/app.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
+
+		<script src="src/js/app.js"></script>
+        <script src="src/js/index.js"></script>
+        <script>
             app.initialize();
         </script>
     </body>

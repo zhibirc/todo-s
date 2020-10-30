@@ -1,0 +1,23 @@
+{
+    "name": "todo-s",
+    "version": "1.0.0",
+    "description": "Your daily schedule and TODO list.",
+    "author": {
+        "name": "",
+        "email": ""
+    },
+    "private": true,
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/zhibirc/todo-s.git"
+    },
+    "keywords": [],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/zhibirc/todo-s/issues"
+    },
+    "homepage": "https://github.com/zhibirc/todo-s#readme"
+}
