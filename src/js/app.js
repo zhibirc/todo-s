@@ -1,18 +1,17 @@
 /**
- * Application core.
+ * @overview Application core.
+ *
+ * @module
  */
 
-'use strict';
+import {config} from './config';
 
-const Emitter = require('cjs-emitter');
-
-const app = new Emitter();
-
-const {
-    API_BASE_PATH_URL
-} = require('./constants');
-
-app.config = require('./config');
+export const app = {
+    config: config,
+    auth: {},
+    dom: {},
+    data: {}
+};
 
 /**
  * Sugar wrapper around native `fetch`.
@@ -109,7 +108,3 @@ app.createRequest = (method, url) => {
 
     return request;
 };
-
-
-// public
-module.exports = app;

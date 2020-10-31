@@ -8,6 +8,8 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi">
         <meta name="theme-color" content="#ffffff">
 
+        <title>Todo-s</title>
+
         <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
         <link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
@@ -26,7 +28,7 @@
 
         <link rel="stylesheet" type="text/css" href="src/css/main.css">
 
-        <title>Todo-s</title>
+        <script type="module" src="src/js/main.js"></script>
     </head>
     <body>
         <header id="header">
@@ -73,7 +75,7 @@
 
         <button onclick="document.getElementById('modal-auth').style.display='block'" style="width:auto;">Login</button>
 
-        <div id="modal-auth" class="modal-auth">
+        <div id="modal-auth" class="modal-auth hidden">
             <div class="modal-auth__content animate">
                 <span onclick="document.getElementById('modal-auth').style.display='none'" class="close" title="Close Modal">&times;</span>
 
@@ -97,10 +99,9 @@
             </div>
         </div>
 
-<!--		<script src="src/js/app.js"></script>-->
-<!--        <script src="src/js/index.js"></script>-->
-<!--        <script>-->
-<!--            app.initialize();-->
-<!--        </script>-->
+        <div class="preloader hidden">
+            <div class="preloader__circle"></div>
+            <div class="preloader__text">loading...</div>
+        </div>
     </body>
 </html>

@@ -1,19 +1,17 @@
 /**
- * Track and handle asynchronous promise rejections.
+ * @overview Module for handle uncaught errors and promises rejections.
  *
  * @module
  */
 
 'use strict';
 
-const app = require('../app');
-
-window.addEventListener('unhandledrejection', event => {
-    // TODO: some actions with modal
-
-    console.warn('Unhandled rejection from promise: ', event.promise);
+// listen to uncaught errors
+window.addEventListener('error', event => {
+    console.error('Error occurred during execution: ', event.error);
 });
 
-
-// public
-module.exports = {};
+// listen to uncaught promises rejections
+window.addEventListener('unhandledrejection', event => {
+    console.warn('Unhandled rejection from promise: ', event.promise);
+});

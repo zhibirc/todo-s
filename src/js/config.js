@@ -1,9 +1,10 @@
 /**
- * Global application configuration.
- * Can store run-time options, API urls, paths, execution flags and so on.
+ * @overview Global application configuration. Can store run-time options, API urls, paths, execution flags and so on.
+ *
+ * @module
  */
 
-'use strict';
-
-// public
-module.exports = {};
+export const config = Object.freeze({
+    API_BASE_PATH_URL: `${location.protocol}//${location.host}/api/v1/`,
+    THEME: 'dark'
+});

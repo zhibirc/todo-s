@@ -32,6 +32,10 @@ header {
     width: 100%;
 }
 
+.hidden {
+    display: none !important;
+}
+
 #toggle_menu {
 	height: 50px;
 	margin: 0 auto;
@@ -254,13 +258,11 @@ body.light-theme {
 }
 
 
-
-
-
-/*======================================
-		DARK THEME
-=======================================*/
-
+/*
+ |------------------------------------
+ |   DARK THEME
+ |------------------------------------
+ */
 
 body.dark-theme {
 	background: #14171A;
@@ -318,13 +320,11 @@ body.dark-theme {
 }
 
 
-
-
-
-/*======================================
-		MEDIA
-=======================================*/
-
+/*
+ |----------------------------------
+ |   MEDIA QUERIES
+ |----------------------------------
+ */
 
 @media screen and (max-width: 1024px) {
 	#settings li {
@@ -342,3 +342,51 @@ body.dark-theme {
 		width: 95%;
 	}
 }
+
+
+/*
+ |--------------------------------
+ |   PRELOADER
+ |--------------------------------
+ */
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.preloader {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    display: block;
+    top: 0;
+    z-index: 1000;
+}
+
+    .preloader__circle {
+        height: 97px;
+        width: 97px;
+        margin: 40vh auto;
+        border: 4px solid #393c48;
+        border-top: 5px solid #eee;
+        border-radius: 50%;
+        animation: rotate 1s infinite linear;
+    }
+
+    .preloader__text {
+        color: #fff;
+        font-size: 20px;
+        position: absolute;
+        text-align: center;
+        text-transform: capitalize;
+        top: 515px;
+        width: 100%;
+    }
+

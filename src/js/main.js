@@ -1,21 +1,22 @@
 /**
- * Main application entry point.
+ * @overview Main application entry point.
+ *
+ * @module
  */
 
 'use strict';
 
-// add preloader
-
-const app = require('./app');
-
-window.addEventListener('scroll', async () => {
-    if ( document.documentElement.getBoundingClientRect().bottom - document.documentElement.clientHeight <= 100) {
-        tabSet.current.emit('scroll:overflow');
-    }
-});
+import './error-interceptor';
+import {app} from './app';
 
 // Get the modal
 var modal = document.getElementById('auth-modal');
+
+window.addEventListener('unhandledrejection', event => {
+    // TODO: some actions with modal
+
+    console.warn('Unhandled rejection from promise: ', event.promise);
+});
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
