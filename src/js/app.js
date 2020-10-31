@@ -5,11 +5,22 @@
  */
 
 import {config} from './config';
+import {$find} from './utils/dom';
+import validate from './utils/validate';
 
-export const app = {
+const app = {
     config: config,
     auth: {},
-    dom: {},
+    dom: {
+        preloader: $find('.preloader'),
+        modals: {
+            auth: $find('.modal-auth')
+        },
+        buttons: {
+            login: $find('.button-login'),
+            createProject: $find('.button-create-project')
+        }
+    },
     data: {}
 };
 
@@ -20,7 +31,7 @@ export const app = {
  * @param {object} config - native fetch configuration
  * @param {object} options - URL parameters
  *
- * @returns {object} response - API response
+ * @return {object} response - API response
  *
  * @example
  * app.fetch('api/endpoints', {method: 'GET'}, {userId:3, typeId:4, meter.resourceTypeId: 2, with: ['users', 'meters']})
@@ -103,8 +114,10 @@ app.init = () => new Promise(resolve => {
 app.createRequest = (method, url) => {
     const request = new XMLHttpRequest();
 
-    request.open(method, API_BASE_PATH_URL + url);
+    request.open(method, app.config.API_BASE_PATH_URL + url);
     //request.setRequestHeader();
 
     return request;
 };
+
+export {app};
