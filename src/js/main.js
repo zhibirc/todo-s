@@ -4,16 +4,15 @@
  * @module
  */
 
-'use strict';
-
 import './utils/error-interceptor.js';
 import storage from './utils/storage.js';
 import app from './app.js';
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target === modal) {
-        modal.style.display = 'none';
+app.dom.root.classList.remove('no-js');
+
+window.onclick = event => {
+    if ( event.target === app.dom.modals.auth ) {
+        app.dom.modals.auth.classList.add('hidden');
     }
 }
 
@@ -30,11 +29,8 @@ app.once('authorize', async () => {
 
 
 if ( storage.userInfo ) {
-    app.dom.root.className = 'private';
     app.dom.body.classList.add(`ui-theme-${app.data.storage.theme}`);
-    app.init(true);
-} else {
-    app.dom.root.className = 'public';
+    app.load();
 }
 
 app.dom.body.classList.remove('hidden');

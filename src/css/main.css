@@ -3,11 +3,21 @@
 @import "not-found.css";
 
 * {
+    box-sizing: border-box;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
 }
 
 html {
 	font-size: 16px;
+}
+
+body, html {
+    height: 100%;
+}
+
+*.private,
+.hidden {
+    display: none !important;
 }
 
 body {
@@ -16,23 +26,24 @@ body {
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
     background-attachment: fixed;
     font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica, Arial, sans-serif;
-    height: 100%;
     margin: 0;
     padding: 0;
     width: 100%;
 }
 
-.public body {
+body.public {
     background-image: url("../img/bg.jpg");
     background-position: center;
     background-size: cover;
+    background-repeat: no-repeat;
 }
 
-.private body {
+body.private {
     background-image: none;
 }
 
-header {
+.header {
+    background: rgba(0, 0, 0, 0.7);
     font: normal 2rem/50px HelveticaNeue-Light, sans-serif;
     height: 50px;
     left: 0;
@@ -40,10 +51,6 @@ header {
     text-align: center;
     top: 0;
     width: 100%;
-}
-
-.hidden {
-    display: none !important;
 }
 
 #toggle_menu {

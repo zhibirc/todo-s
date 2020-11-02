@@ -4,8 +4,6 @@
  * @module
  */
 
-'use strict';
-
 /** @see {@link http://www.rfc-editor.org/errata_search.php?rfc=3696&eid=1690} */
 const EMAIL_MAX_LENGTH = 254;
 /** @see {@link https://emailregex.com/} */

@@ -4,8 +4,6 @@
  * @module
  */
 
-'use strict';
-
 // listen to uncaught errors
 window.addEventListener('error', event => {
     console.error('Error occurred during execution: ', event.error);

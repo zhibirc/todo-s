@@ -30,32 +30,33 @@
 
         <script type="module" src="src/js/main.js"></script>
     </head>
-    <body>
+    <body class="public hidden">
         <!--<noscript></noscript>-->
 
-        <header id="header">
-            <div class="private hidden">
-                <div id="toggle_menu">
+        <header class="header">
+            <div class="controls">
+                <div id="toggle_menu" class="private">
                     <i class="fa fa-bars" id="fa_bars"></i>
                     <i class="fa fa-unlock hidden" id="fa_unlock"></i>
                     <i class="fa fa-lock hidden" id="fa_lock"></i>
                 </div>
 
-                <ul id="settings">
+                <ul id="settings" class="private">
                     <li data-lang-switch="" data-lang-be="Мова" data-lang-de="Sprache" data-lang-en="Language" data-lang-es="Lengua" data-lang-iw="שפה" data-lang-ru="Язык" data-lang-uk="Мова" data-lang-fi="Kieli" data-lang-fr="Langue">Язык</li>
                     <li data-theme="light-theme" data-lang-be="Светлая тэма" data-lang-de="Licht Thema" data-lang-en="Light theme" data-lang-es="Un tema brillante" data-lang-iw="נושא בהיר" data-lang-ru="Светлая тема" data-lang-uk="Світла тема" data-lang-fi="Kirkas teema" data-lang-fr="Thème lumineux"><!-- <i class="fa fa-circle-thin"> --></i>Светлая тема</li>
                     <li data-theme="dark-theme" data-lang-be="Цёмная тэма" data-lang-de="Dunkles Thema" data-lang-en="Dark theme" data-lang-es="Tema oscuro" data-lang-iw="נושא כהה" data-lang-ru="Темная тема" data-lang-uk="Темна тема" data-lang-fi="Tumma teema" data-lang-fr="Thème sombre"><!-- <i class="fa fa-circle"></i> -->Темная тема</li>
                     <li data-clear="" data-lang-be="Ачысціць спіс" data-lang-de="Liste löschen" data-lang-en="Clear list" data-lang-es="Borrar lista" data-lang-iw="רשימה ברורה" data-lang-ru="Очистить список" data-lang-uk="Очистити список" data-lang-fi="Tyhjennä lista" data-lang-fr="Supprimer la liste">Очистить список</li>
                 </ul>
 
-                <button class="button-create-project" title="Create new project to organize tasks semantically">+ Create Project</button>
-            </div>
+                <button class="controls__create-project private" title="Create new project to organize tasks semantically">+ Create Project</button>
 
-            <div class="public">
-                <button class="button-login">Login</button>
+                <div class="controls__auth">
+                    <button onclick="document.getElementById('modal-auth').classList.remove('hidden')" id="button-login" class="controls__auth-login">Login</button>
+                    <!--<button id="button-register" class="controls__auth-register">Register</button>-->
+                </div>
             </div>
 		</header>
-		<table id="stat">
+		<table id="stat" class="private">
 			<tr>
 				<td data-lang-be="Усяго:" data-lang-de="Gesamt:" data-lang-en="Total:" data-lang-es="En total:" data-lang-iw="בכל:" data-lang-ru="Всего:" data-lang-uk="Всього:" data-lang-fi="Kaikkiaan:" data-lang-fr="En tout:">Всего:</td>
 				<td id="stat_total">0</td>
@@ -69,10 +70,10 @@
 			</tr>
 		</table>
 
-		<section id="task_section"></section>
+		<section id="task_section" class="private"></section>
 
 		<div id="overlay" class="hidden"></div>
-		<div id="popup" class="hidden" data-aim="lang">
+		<div id="popup" class="private hidden" data-aim="lang">
 			<p data-lang="be" data-lang-be="Беларуская" data-lang-de="Belarussisch" data-lang-en="Belarusian" data-lang-es="Bielorruso" data-lang-iw="הביילורוסית" data-lang-ru="Белорусский" data-lang-uk="Білоруська" data-lang-fi="Valkovenäjä" data-lang-fr="Biélorusse">Белорусский</p>
 			<p data-lang="de" data-lang-be="Нямецкая" data-lang-de="Deutsch" data-lang-en="German" data-lang-es="Aleman" data-lang-iw="גרמני" data-lang-ru="Немецкий" data-lang-uk="Німецька" data-lang-fi="Saksa" data-lang-fr="Allemand">Немецкий</p>
 			<p data-lang="en" data-lang-be="Англійская" data-lang-de="Englisch" data-lang-en="English" data-lang-es="Inglés" data-lang-iw="אנגלית" data-lang-ru="Английский" data-lang-uk="Англійська" data-lang-fi="Englanti" data-lang-fr="Anglais">Английский</p>
@@ -84,11 +85,9 @@
 			<p data-lang="fr" data-lang-be="Французская" data-lang-de="Französisch" data-lang-en="French" data-lang-es="Francés" data-lang-iw="צרפתי" data-lang-ru="Французский" data-lang-uk="Французька" data-lang-fi="Ranska" data-lang-fr="Français">Французский</p>
 		</div>
 
-        <button onclick="document.getElementById('modal-auth').style.display='block'" style="width:auto;">Login</button>
-
         <div id="modal-auth" class="modal-auth hidden">
             <div class="modal-auth__content animate">
-                <span onclick="document.getElementById('modal-auth').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <span onclick="document.getElementById('modal-auth').classList.add('hidden')" class="close" title="Close Modal">&times;</span>
 
                 <div class="container">
                     <label for="uname"><b>Username</b></label>
@@ -104,7 +103,7 @@
                 </div>
 
                 <div class="container" style="background-color:#f1f1f1">
-                    <button type="button" onclick="document.getElementById('modal-auth').style.display='none'" class="cancelbtn">Cancel</button>
+                    <button type="button" onclick="document.getElementById('modal-auth').classList.add('hidden')" class="cancelbtn">Cancel</button>
                     <span class="psw">Forgot <a href="#">password?</a></span>
                 </div>
             </div>
