@@ -6,9 +6,9 @@
 
 'use strict';
 
-import './utils/error-interceptor';
-import storage from './utils/storage';
-import app from './app';
+import './utils/error-interceptor.js';
+import storage from './utils/storage.js';
+import app from './app.js';
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -26,10 +26,15 @@ app.once('authorize', async () => {
     if ( location.pathname === '/login' ) {
         // TODO: go to root
     }
-});
+});*/
 
-app.init();*/
 
-if ( !app.auth.user ) {
-    // TODO: check also from storage because of reload page
+if ( storage.userInfo ) {
+    app.dom.root.className = 'private';
+    app.dom.body.classList.add(`ui-theme-${app.data.storage.theme}`);
+    app.init(true);
+} else {
+    app.dom.root.className = 'public';
 }
+
+app.dom.body.classList.remove('hidden');

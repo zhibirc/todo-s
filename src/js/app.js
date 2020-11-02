@@ -4,14 +4,16 @@
  * @module
  */
 
-import config from './config';
-import validate from './utils/validate';
-import {$find} from './utils/dom';
+import config from './config.js';
+import validate from './utils/validate.js';
+import {$find} from './utils/dom.js';
 
 const auth = {};
 
 const app = {
     dom: {
+        root: document.documentElement,
+        body: document.body,
         preloader: $find('.preloader'),
         modals: {
             auth: $find('.modal-auth')
@@ -22,7 +24,9 @@ const app = {
         }
     },
     data: {
-        storage: null,
+        storage: {
+            theme: config.UI_THEME
+        },
         runtime: null
     }
 };
@@ -107,12 +111,6 @@ app.logout = () => {
     localStorage.clear();
     location.reload();
 };
-
-app.init = () => new Promise(resolve => {
-    const User = null; // TODO: implement
-
-    // TODO: init actions probably should be here
-});
 
 app.createRequest = (method, url) => {
     const request = new XMLHttpRequest();

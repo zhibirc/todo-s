@@ -22,6 +22,16 @@ body {
     width: 100%;
 }
 
+.public body {
+    background-image: url("../img/bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+.private body {
+    background-image: none;
+}
+
 header {
     font: normal 2rem/50px HelveticaNeue-Light, sans-serif;
     height: 50px;

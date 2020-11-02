@@ -4,7 +4,7 @@
  * @module
  */
 
-import config from '../config';
+import config from '../config.js';
 
 const storage = {
     get userInfo () {
