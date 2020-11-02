@@ -4,13 +4,13 @@
  * @module
  */
 
-import {config} from './config';
-import {$find} from './utils/dom';
+import config from './config';
 import validate from './utils/validate';
+import {$find} from './utils/dom';
+
+const auth = {};
 
 const app = {
-    config: config,
-    auth: {},
     dom: {
         preloader: $find('.preloader'),
         modals: {
@@ -21,7 +21,10 @@ const app = {
             createProject: $find('.button-create-project')
         }
     },
-    data: {}
+    data: {
+        storage: null,
+        runtime: null
+    }
 };
 
 /**
@@ -120,4 +123,4 @@ app.createRequest = (method, url) => {
     return request;
 };
 
-export {app};
+export default app;

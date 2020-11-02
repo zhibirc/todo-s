@@ -6,8 +6,9 @@
 
 'use strict';
 
-import 'utils/error-interceptor';
-import {app} from './app';
+import './utils/error-interceptor';
+import storage from './utils/storage';
+import app from './app';
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -17,7 +18,7 @@ window.onclick = function(event) {
 }
 
 
-app.once('auth:error', app.logout);
+/*app.once('auth:error', app.logout);
 
 app.once('authorize', async () => {
     // TODO: init main view
@@ -27,7 +28,7 @@ app.once('authorize', async () => {
     }
 });
 
-app.init();
+app.init();*/
 
 if ( !app.auth.user ) {
     // TODO: check also from storage because of reload page
