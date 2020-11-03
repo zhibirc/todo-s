@@ -1,4 +1,13 @@
-/* TODO: rework class names for accomplish BEM requirements */
+@import "../../css/main.css";
+
+body {
+    background-size: cover;
+    background: url("./bg.jpg") no-repeat fixed center;
+}
+
+.controls {
+    text-align: center;
+}
 
 input[type=text], input[type=password] {
     width: 100%;
@@ -9,23 +18,19 @@ input[type=text], input[type=password] {
     box-sizing: border-box;
 }
 
-/* Set a style for all buttons */
 button {
     background-color: #4CAF50;
-    color: white;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
+    font-size: 20px;
+    color: #fefefe;
+    padding: 8px;
+    width: 200px;
 }
 
 button:hover {
     opacity: 0.8;
 }
 
-.cancelbtn {
-    width: auto;
-    padding: 10px 18px;
+.button-login-cancel {
     background-color: #f44336;
 }
 
@@ -75,7 +80,6 @@ span.psw {
     cursor: pointer;
 }
 
-/* Add Zoom Animation */
 .animate {
     -webkit-animation: animatezoom 0.6s;
     animation: animatezoom 0.6s
@@ -97,7 +101,9 @@ span.psw {
         display: block;
         float: none;
     }
-    .cancelbtn {
+
+    .button-login-cancel {
         width: 100%;
     }
 }
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <div class="view">
+            <header>
+                <div class="controls">
+                    <button onclick="document.getElementById('modal-auth').classList.remove('hidden')" id="modal-auth-show" class="controls__modal-auth-show">Login</button>
+                </div>
+            </header>
+
+            <div id="overlay" class="hidden"></div>
+
+            <div id="modal-auth" class="modal-auth hidden">
+                <div class="modal-auth__content animate">
+                    <span onclick="document.getElementById('modal-auth').classList.add('hidden')" class="close" title="Close Modal">&times;</span>
+
+                    <div class="container" style="background-color:#f1f1f1">
+                        <label><b>Username</b></label>
+                        <input type="text" placeholder="Enter Username" required>
+
+                        <label><b>Password</b></label>
+                        <input type="password" placeholder="Enter Password" required>
+
+                        <div class="controls">
+                            <button id="button-login" class="button-login">Login</button>
+                            <button onclick="document.getElementById('modal-auth').classList.add('hidden')" class="button-login-cancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preloader hidden">
+                <div class="preloader__circle"></div>
+                <div class="preloader__text">loading...</div>
+            </div>
+        </div>
+    </body>
+</html>

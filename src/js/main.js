@@ -28,12 +28,12 @@ app.once('authorize', async () => {
 app.dom.$iframe = document.createElement('iframe');
 
 if ( storage.userInfo ) {
-    app.dom.$iframe.src = 'src/views/private.html';
+    app.dom.$iframe.src = 'src/views/private/index.html';
     app.dom.body.appendChild(app.dom.$iframe);
     app.dom.body.classList.add(`ui-theme-${app.data.storage.theme}`);
 
     app.load();
 } else {
-    app.dom.$iframe.src = 'src/views/public.html';
+    app.dom.$iframe.src = 'src/views/public/index.html';
     app.dom.body.appendChild(app.dom.$iframe);
 }
