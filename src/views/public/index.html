@@ -16,18 +16,18 @@
 
             <div id="modal-auth" class="modal-auth hidden">
                 <div class="modal-auth__content animate">
-                    <span onclick="document.getElementById('modal-auth').classList.add('hidden')" class="close" title="Close Modal">&times;</span>
+                    <span onclick="window['modal-auth'].classList.add('hidden')" class="close" title="Close Modal">&times;</span>
 
-                    <div class="container" style="background-color:#f1f1f1">
+                    <div class="container">
                         <label><b>Username</b></label>
-                        <input type="text" placeholder="Enter Username" required>
+                        <input id="login" type="text" placeholder="Enter Username" required>
 
                         <label><b>Password</b></label>
-                        <input type="password" placeholder="Enter Password" required>
+                        <input id="password" type="password" placeholder="Enter Password" required>
 
                         <div class="controls">
-                            <button id="button-login" class="button-login">Login</button>
-                            <button onclick="document.getElementById('modal-auth').classList.add('hidden')" class="button-login-cancel">Cancel</button>
+                            <button onclick="window.top.postMessage(JSON.stringify({login: window.login.value, password: window.password.value}), location.origin)" class="button-login">Login</button>
+                            <button onclick="window['modal-auth'].classList.add('hidden')" class="button-login-cancel">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -38,5 +38,13 @@
                 <div class="preloader__text">loading...</div>
             </div>
         </div>
+
+        <script>
+            window.addEventListener('click', event => {
+                if ( event.target === window['modal-auth'] ) {
+                    window['modal-auth'].classList.add('hidden');
+                }
+            });
+        </script>
     </body>
 </html>
