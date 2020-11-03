@@ -13,7 +13,9 @@ const auth = {};
 const app = {
     dom: {
         root: document.documentElement,
+        head: document.head,
         body: document.body,
+        $iframe: null,
         preloader: $find('.preloader'),
         modals: {
             auth: $find('.modal-auth')

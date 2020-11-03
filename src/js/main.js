@@ -8,8 +8,6 @@ import './utils/error-interceptor.js';
 import storage from './utils/storage.js';
 import app from './app.js';
 
-app.dom.root.classList.remove('no-js');
-
 window.onclick = event => {
     if ( event.target === app.dom.modals.auth ) {
         app.dom.modals.auth.classList.add('hidden');
@@ -27,10 +25,15 @@ app.once('authorize', async () => {
     }
 });*/
 
+app.dom.$iframe = document.createElement('iframe');
 
 if ( storage.userInfo ) {
+    app.dom.$iframe.src = 'src/views/private.html';
+    app.dom.body.appendChild(app.dom.$iframe);
     app.dom.body.classList.add(`ui-theme-${app.data.storage.theme}`);
-    app.load();
-}
 
-app.dom.body.classList.remove('hidden');
+    app.load();
+} else {
+    app.dom.$iframe.src = 'src/views/public.html';
+    app.dom.body.appendChild(app.dom.$iframe);
+}
