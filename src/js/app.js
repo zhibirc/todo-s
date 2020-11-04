@@ -7,7 +7,8 @@
 import config from './config.js';
 import EventEmitter from "./utils/event.emitter.js";
 import validate from './utils/validate.js';
-import {$find} from './utils/dom.js';
+import request from './utils/request.js';
+import {$show, $hide, $find} from './utils/dom.js';
 
 const auth = {};
 
@@ -18,7 +19,7 @@ app.dom = {
     head: document.head,
     body: document.body,
     $iframe: null,
-    preloader: $find('.preloader'),
+    $preloader: $find('.preloader'),
     modals: {
         auth: $find('.modal-auth')
     },
@@ -36,11 +37,20 @@ app.data = {
 };
 
 app.addListeners({
-    login: data => {
+    login: async data => {
         if ( validate.login(data.login) && validate.password(data.password) ) {
-            app.authorize(data.login, data.password);
+            $show(app.dom.$preloader);
+
+            try {
+                await app.authorize(data.login, data.password);
+                app.emit('auth:success');
+            } catch ( error ) {
+                app.emit('auth:error');
+            }
+
+            $hide(app.dom.$preloader);
         } else {
-            window.postMessage('login:error', '*');
+            app.emit('auth:error');
         }
     }
 });
@@ -98,13 +108,13 @@ app.fetch = (url, config = {}, options) => {
     return response;
 };
 
-app.authorize = (email, password) => {
+app.authorize = (login, password) => {
     console.log('call to authorize');
 
     return new Promise((resolve, reject) => {
-        fetch(API_BASE_PATH_URL, {
+        fetch(`${config.API_BASE_PATH_URL}api/sessions`, {
             method: 'POST',
-            body: JSON.stringify({email, password}),
+            body: JSON.stringify({login, password}),
             headers: {
                 'Content-type': 'application/json'
             }
@@ -122,20 +132,11 @@ app.authorize = (email, password) => {
     });
 };
 
-// TODO: rework
+
 app.logout = () => {
     sessionStorage.clear();
     localStorage.clear();
     location.reload();
-};
-
-app.createRequest = (method, url) => {
-    const request = new XMLHttpRequest();
-
-    request.open(method, app.config.API_BASE_PATH_URL + url);
-    //request.setRequestHeader();
-
-    return request;
 };
 
 /*

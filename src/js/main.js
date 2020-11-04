@@ -24,12 +24,16 @@ window.addEventListener('message', event => {
         case 'login':
             app.emit('login', message.data);
             break;
-        case 'login:error':
-            app.dom.$iframe.contentWindow.postMessage('login:error', '*');
-            break;
         default:
             console.error('I don\'t know nothing about message: ', message);
     }
+});
+
+app.addListeners({
+    'auth:success': data => {
+        console.log('User is authorized successfully!');
+    },
+    'auth:error': () => app.dom.$iframe.contentWindow.postMessage('auth:error', '*')
 });
 
 if ( storage.userInfo ) {
