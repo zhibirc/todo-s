@@ -9,10 +9,27 @@ import storage from './utils/storage.js';
 import app from './app.js';
 
 app.dom.$iframe = document.createElement('iframe');
-app.dom.$iframe.sandbox = 'allow-scripts';
+app.dom.$iframe.sandbox = 'allow-same-origin allow-scripts';
 
 window.addEventListener('message', event => {
-    console.log('Event from frame: ', event);
+    let message;
+
+    try {
+        message = JSON.parse(event.data);
+    } catch ( error ) {
+        message = event.data ? {subject: event.data} : 'unknown';
+    }
+
+    switch ( message.subject ) {
+        case 'login':
+            app.emit('login', message.data);
+            break;
+        case 'login:error':
+            app.dom.$iframe.contentWindow.postMessage('login:error', '*');
+            break;
+        default:
+            console.error('I don\'t know nothing about message: ', message);
+    }
 });
 
 if ( storage.userInfo ) {

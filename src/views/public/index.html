@@ -26,20 +26,19 @@
                         <input id="password" type="password" placeholder="Enter Password" required>
 
                         <div class="controls">
-                            <button onclick="window.top.postMessage(JSON.stringify({login: window.login.value, password: window.password.value}), location.origin)" class="button-login">Login</button>
+                            <button onclick="window.top.postMessage(JSON.stringify({subject: 'login', data: {login: window.login.value, password: window.password.value}}), '*')" class="button-login">Login</button>
                             <button onclick="window['modal-auth'].classList.add('hidden')" class="button-login-cancel">Cancel</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="preloader hidden">
-                <div class="preloader__circle"></div>
-                <div class="preloader__text">loading...</div>
-            </div>
         </div>
 
         <script>
+            window.addEventListener('message', event => {
+                window.top.console.log('in iframe: ', event);
+            });
+
             window.addEventListener('click', event => {
                 if ( event.target === window['modal-auth'] ) {
                     window['modal-auth'].classList.add('hidden');

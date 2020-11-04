@@ -5,33 +5,46 @@
  */
 
 import config from './config.js';
+import EventEmitter from "./utils/event.emitter.js";
 import validate from './utils/validate.js';
 import {$find} from './utils/dom.js';
 
 const auth = {};
 
-const app = {
-    dom: {
-        root: document.documentElement,
-        head: document.head,
-        body: document.body,
-        $iframe: null,
-        preloader: $find('.preloader'),
-        modals: {
-            auth: $find('.modal-auth')
-        },
-        buttons: {
-            login: $find('.button-login'),
-            createProject: $find('.button-create-project')
-        }
+const app = new EventEmitter();
+
+app.dom = {
+    root: document.documentElement,
+    head: document.head,
+    body: document.body,
+    $iframe: null,
+    preloader: $find('.preloader'),
+    modals: {
+        auth: $find('.modal-auth')
     },
-    data: {
-        storage: {
-            theme: config.UI_THEME
-        },
-        runtime: null
+    buttons: {
+        login: $find('.button-login'),
+        createProject: $find('.button-create-project')
     }
 };
+
+app.data = {
+    storage: {
+        theme: config.UI_THEME
+    },
+    runtime: null
+};
+
+app.addListeners({
+    login: data => {
+        if ( validate.login(data.login) && validate.password(data.password) ) {
+            app.authorize(data.login, data.password);
+        } else {
+            window.postMessage('login:error', '*');
+        }
+    }
+});
+
 
 /**
  * Sugar wrapper around native `fetch`.
@@ -86,6 +99,8 @@ app.fetch = (url, config = {}, options) => {
 };
 
 app.authorize = (email, password) => {
+    console.log('call to authorize');
+
     return new Promise((resolve, reject) => {
         fetch(API_BASE_PATH_URL, {
             method: 'POST',
