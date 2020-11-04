@@ -1,49 +1,36 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="main.css">
-    </head>
-    <body>
-        <div class="view">
-            <header>
+<div class="view">
+    <header>
+        <div class="controls">
+            <button onclick="document.getElementById('modal-auth').classList.remove('hidden')" id="modal-auth-show" class="controls__modal-auth-show">Login</button>
+        </div>
+    </header>
+
+    <div id="overlay" class="hidden"></div>
+
+    <div id="modal-auth" class="modal-auth hidden">
+        <div class="modal-auth__content animate">
+            <span onclick="window['modal-auth'].classList.add('hidden')" class="close" title="Close Modal">&times;</span>
+
+            <div class="container">
+                <label><b>Username</b></label>
+                <input id="login" type="text" placeholder="Enter Username" required>
+
+                <label><b>Password</b></label>
+                <input id="password" type="password" placeholder="Enter Password" required>
+
                 <div class="controls">
-                    <button onclick="document.getElementById('modal-auth').classList.remove('hidden')" id="modal-auth-show" class="controls__modal-auth-show">Login</button>
-                </div>
-            </header>
-
-            <div id="overlay" class="hidden"></div>
-
-            <div id="modal-auth" class="modal-auth hidden">
-                <div class="modal-auth__content animate">
-                    <span onclick="window['modal-auth'].classList.add('hidden')" class="close" title="Close Modal">&times;</span>
-
-                    <div class="container">
-                        <label><b>Username</b></label>
-                        <input id="login" type="text" placeholder="Enter Username" required>
-
-                        <label><b>Password</b></label>
-                        <input id="password" type="password" placeholder="Enter Password" required>
-
-                        <div class="controls">
-                            <button onclick="window.top.postMessage(JSON.stringify({subject: 'login', data: {login: window.login.value, password: window.password.value}}), '*')" class="button-login">Login</button>
-                            <button onclick="window['modal-auth'].classList.add('hidden')" class="button-login-cancel">Cancel</button>
-                        </div>
-                    </div>
+                    <button onclick="window.top.postMessage(JSON.stringify({subject: 'login', data: {login: window.login.value, password: window.password.value}}), '*')" class="button-login">Login</button>
+                    <button onclick="window['modal-auth'].classList.add('hidden')" class="button-login-cancel">Cancel</button>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <script>
-            window.addEventListener('message', event => {
-                window.top.console.log('in iframe: ', event);
-            });
-
-            window.addEventListener('click', event => {
-                if ( event.target === window['modal-auth'] ) {
-                    window['modal-auth'].classList.add('hidden');
-                }
-            });
-        </script>
-    </body>
-</html>
+<script>
+    window.addEventListener('click', event => {
+        if ( event.target === window['modal-auth'] ) {
+            window['modal-auth'].classList.add('hidden');
+        }
+    });
+</script>

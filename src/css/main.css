@@ -1,3 +1,6 @@
+@import '../views/public/main.css';
+@import '../views/private/main.css';
+
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */

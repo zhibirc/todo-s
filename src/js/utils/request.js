@@ -5,7 +5,6 @@
  */
 
 /**
- * Ajax request
  * @param {string} method "post", "get" or "head"
  * @param {string} url address
  * @param {Function} callback on
@@ -23,7 +22,6 @@ export default function ( method, url, callback, headers, type, async, abortTime
     var jdata   = null,
         timeout = null,
         xhr     = new XMLHttpRequest(),
-        title   = 'AJAX ' + method.toUpperCase() + ' ' + url,
         hname, aborted;
 
     async = async !== false;
@@ -34,25 +32,19 @@ export default function ( method, url, callback, headers, type, async, abortTime
             if ( aborted ) {
                 return;
             }
+
             clearTimeout(timeout);
-            if ( ajax.stop ) {
-                echo(xhr.status, title);
-                if ( typeof callback === 'function' ) {
-                    callback(null, null, null);
+
+            if ( type === 'json' && xhr.status === 200 ) {
+                try {
+                    jdata = JSON.parse(xhr.responseText);
+                } catch ( error ) {
+                    jdata = null;
                 }
-            } else {
-                echo('status:' + xhr.status + ', length:' + xhr.responseText.length, title);
-                if ( type === 'json' && xhr.status === 200 ) {
-                    try {
-                        jdata = JSON.parse(xhr.responseText);
-                    } catch ( e ) {
-                        echo(e, 'AJAX JSON.parse');
-                        jdata = null;
-                    }
-                }
-                if ( typeof callback === 'function' ) {
-                    callback(type === 'xml' ? xhr.responseXML : (type === 'json' ? jdata : xhr.responseText), xhr.status, xhr);
-                }
+            }
+
+            if ( typeof callback === 'function' ) {
+                callback(type === 'xml' ? xhr.responseXML : (type === 'json' ? jdata : xhr.responseText), xhr.status, xhr);
             }
         }
     };
@@ -69,7 +61,6 @@ export default function ( method, url, callback, headers, type, async, abortTime
 
     // abort after some time (60s)
     timeout = setTimeout(function () {
-        echo('ABORT on timeout', title);
         if ( typeof callback === 'function' ) {
             callback(null, 0);
             // no readystatechange event should be dispatched after xhr.abort() (https://xhr.spec.whatwg.org/#dom-xmlhttprequest-abort)
@@ -80,8 +71,6 @@ export default function ( method, url, callback, headers, type, async, abortTime
     }, abortTimeout);
 
     xhr.send();
-    echo('sent', title);
-
 
     return xhr;
 }

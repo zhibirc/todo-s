@@ -15,10 +15,7 @@ const auth = {};
 const app = new EventEmitter();
 
 app.dom = {
-    root: document.documentElement,
-    head: document.head,
-    body: document.body,
-    $iframe: null,
+    $app: $find('#app'),
     $preloader: $find('.preloader'),
     modals: {
         auth: $find('.modal-auth')
@@ -130,13 +127,6 @@ app.authorize = (login, password) => {
             })
             .catch(error => console.error(error) && reject(error));
     });
-};
-
-
-app.logout = () => {
-    sessionStorage.clear();
-    localStorage.clear();
-    location.reload();
 };
 
 /*
