@@ -6,7 +6,9 @@
  */
 
 export default class EventEmitter {
-    constructor () {
+    constructor ( config = {} ) {
+        Object.assign(this, config);
+
         /**
          * @private
          * @type {{}}

@@ -2,10 +2,7 @@
     "name": "todo-s",
     "version": "1.0.0",
     "description": "Your daily schedule and TODO list.",
-    "author": {
-        "name": "",
-        "email": ""
-    },
+    "author": "",
     "private": true,
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,5 +16,8 @@
     "bugs": {
         "url": "https://github.com/zhibirc/todo-s/issues"
     },
-    "homepage": "https://github.com/zhibirc/todo-s#readme"
+    "homepage": "https://github.com/zhibirc/todo-s#readme",
+    "dependencies": {
+        "bulma": "^0.9.1"
+    }
 }

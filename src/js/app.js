@@ -5,33 +5,39 @@
  */
 
 import config from './config.js';
+
+import Model from './models/model.js';
+import User from './models/user.js';
+
 import EventEmitter from "./utils/event.emitter.js";
 import validate from './utils/validate.js';
 import request from './utils/request.js';
 import {$show, $hide, $find} from './utils/dom.js';
 
+import Project from './components/project.js';
+import Todo from './components/todo.js';
+
 const auth = {};
 
-const app = new EventEmitter();
-
-app.dom = {
-    $app: $find('#app'),
-    $preloader: $find('.preloader'),
-    modals: {
-        auth: $find('.modal-auth')
+const app = new EventEmitter({
+    dom: {
+        $app: $find('#app'),
+        $preloader: $find('.preloader'),
+        modals: {
+            auth: $find('.modal-auth')
+        },
+        buttons: {
+            login: $find('.button-login'),
+            createProject: $find('.button-create-project')
+        }
     },
-    buttons: {
-        login: $find('.button-login'),
-        createProject: $find('.button-create-project')
+    data: {
+        storage: {
+            theme: config.UI_THEME
+        },
+        runtime: null
     }
-};
-
-app.data = {
-    storage: {
-        theme: config.UI_THEME
-    },
-    runtime: null
-};
+});
 
 app.addListeners({
     login: async data => {
@@ -52,76 +58,26 @@ app.addListeners({
     }
 });
 
-
-/**
- * Sugar wrapper around native `fetch`.
- *
- * @param {string} url - base url for request
- * @param {object} config - native fetch configuration
- * @param {object} options - URL parameters
- *
- * @return {object} response - API response
- *
- * @example
- * app.fetch('api/endpoints', {method: 'GET'}, {userId:3, typeId:4, meter.resourceTypeId: 2, with: ['users', 'meters']})
- */
-app.fetch = (url, config = {}, options) => {
-    let response;
-
-    if ( config.headers ) {
-        config.headers['Content-type'] = 'application/json';
-    } else {
-        config.headers = {
-            'Content-type': 'application/json'
-        };
-    }
-
-    // TODO: refactor
-    // dealing with "options"
-
-    console.info('api:get:', url);
-
-    response = fetch(
-        API_BASE_PATH_URL + url,
-        config
-    ).then(async fetchResponse => {
-        if ( fetchResponse.status === 401 ) {
-            console.log('bad request');
-            try {
-                // fixme
-
-                return app.fetch(url, config);
-            } catch ( error ) {
-                console.error(error);
-                app.emit('auth:error');
-            }
-
-            return false;
-        }
-
-        return fetchResponse;
-    });
-
-    return response;
-};
-
 app.authorize = (login, password) => {
-    console.log('call to authorize');
+    console.log('CALL::authorize');
 
     return new Promise((resolve, reject) => {
-        fetch(`${config.API_BASE_PATH_URL}api/sessions`, {
+        fetch(`${config.API_BASE_PATH_URL}/sessions`, {
             method: 'POST',
             body: JSON.stringify({login, password}),
             headers: {
                 'Content-type': 'application/json'
             }
         })
-            .then(response => response.json())
-            .then(result => {
-                const User = null; // fixme: get user!!!
+            .then(response => {
+                if ( response.status >= 400 ) {
+                    throw new Error();
+                }
 
-                // fixme
-                app.user = {};
+                return response.json();
+            })
+            .then(result => {
+                app.user = new User();
 
                 resolve(app.user);
             })
