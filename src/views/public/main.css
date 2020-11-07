@@ -64,7 +64,7 @@ span.psw {
     padding: 20px;
 }
 
-.close {
+#button-close-modal-auth {
     position: absolute;
     right: 20px;
     top: 10px;
@@ -73,8 +73,8 @@ span.psw {
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+#button-close-modal-auth:hover,
+#button-close-modal-auth:focus {
     color: #f00;
     cursor: pointer;
 }

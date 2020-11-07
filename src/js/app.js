@@ -11,7 +11,6 @@ import User from './models/user.js';
 
 import EventEmitter from "./utils/event.emitter.js";
 import validate from './utils/validate.js';
-import request from './utils/request.js';
 import {$show, $hide, $find} from './utils/dom.js';
 
 import Project from './components/project.js';
@@ -20,12 +19,37 @@ import Todo from './components/todo.js';
 const auth = {};
 const noop = () => {};
 
+const authorize = (login, password) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${config.API_BASE_PATH_URL}/sessions`, {
+            method: 'POST',
+            body: JSON.stringify({login, password}),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+            .then(response => {
+                if ( response.status >= 400 ) {
+                    reject('Bad request');
+                }
+
+                return response.json();
+            })
+            .then(result => {
+                app.user = new User();
+
+                resolve(app.user);
+            })
+            .catch(error => reject(error));
+    });
+};
+
 const app = new EventEmitter({
     dom: {
         $app: $find('#app'),
         $preloader: $find('.preloader'),
         buttons: {
-            createProject: $find('.button-create-project')
+            $createProject: $find('.button-create-project')
         }
     },
     data: {
@@ -38,60 +62,32 @@ const app = new EventEmitter({
 
 app.initWindowEvents = () => {
     const handlers = {
-        'modal-auth-show':     () => $find('#modal-auth').classList.toggle('hidden'),
-        'modal-auth':          () => $find('#modal-auth').classList.toggle('hidden'),
-        'button-login':        () => app.emit('login', {login: $find('#login').value, password: $find('#password').value}),
-        'button-login-cancel': () => $find('#modal-auth').classList.add('hidden')
+        'modal-auth-show':         () => $show('#modal-auth'),
+        'modal-auth':              () => $hide('#modal-auth'),
+        'button-login':            () => app.login({login: $find('#login').value, password: $find('#password').value}),
+        'button-login-cancel':     () => $hide('#modal-auth'),
+        'button-close-modal-auth': () => $hide('#modal-auth')
     };
 
     window.addEventListener('click', event => (handlers[event.target.id] || noop)());
 };
 
-app.addListeners({
-    login: async data => {
-        if ( validate.login(data.login) && validate.password(data.password) ) {
-            $show(app.dom.$preloader);
+app.login = async data => {
+    if ( validate.login(data.login) && validate.password(data.password) ) {
+        $show(app.dom.$preloader);
 
-            try {
-                await app.authorize(data.login, data.password);
-                app.emit('auth:success');
-            } catch ( error ) {
-                app.emit('auth:error');
-            }
-
-            $hide(app.dom.$preloader);
-        } else {
-            $show('#login-error-info');
+        try {
+            await authorize(data.login, data.password);
+            app.emit('auth:success');
+        } catch ( error ) {
+            console.error(error);
             app.emit('auth:error');
         }
+
+        $hide(app.dom.$preloader);
+    } else {
+        $show('#login-error-info');
     }
-});
-
-app.authorize = (login, password) => {
-    console.log('CALL::authorize');
-
-    return new Promise((resolve, reject) => {
-        fetch(`${config.API_BASE_PATH_URL}/sessions`, {
-            method: 'POST',
-            body: JSON.stringify({login, password}),
-            headers: {
-                'Content-type': 'application/json'
-            }
-        })
-            .then(response => {
-                if ( response.status >= 400 ) {
-                    throw new Error();
-                }
-
-                return response.json();
-            })
-            .then(result => {
-                app.user = new User();
-
-                resolve(app.user);
-            })
-            .catch(error => console.error(error) && reject(error));
-    });
 };
 
 /*
