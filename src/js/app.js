@@ -18,16 +18,13 @@ import Project from './components/project.js';
 import Todo from './components/todo.js';
 
 const auth = {};
+const noop = () => {};
 
 const app = new EventEmitter({
     dom: {
         $app: $find('#app'),
         $preloader: $find('.preloader'),
-        modals: {
-            auth: $find('.modal-auth')
-        },
         buttons: {
-            login: $find('.button-login'),
             createProject: $find('.button-create-project')
         }
     },
@@ -38,6 +35,17 @@ const app = new EventEmitter({
         runtime: null
     }
 });
+
+app.initWindowEvents = () => {
+    const handlers = {
+        'modal-auth-show':     () => $find('#modal-auth').classList.toggle('hidden'),
+        'modal-auth':          () => $find('#modal-auth').classList.toggle('hidden'),
+        'button-login':        () => app.emit('login', {login: $find('#login').value, password: $find('#password').value}),
+        'button-login-cancel': () => $find('#modal-auth').classList.add('hidden')
+    };
+
+    window.addEventListener('click', event => (handlers[event.target.id] || noop)());
+};
 
 app.addListeners({
     login: async data => {
@@ -53,6 +61,7 @@ app.addListeners({
 
             $hide(app.dom.$preloader);
         } else {
+            $show('#login-error-info');
             app.emit('auth:error');
         }
     }

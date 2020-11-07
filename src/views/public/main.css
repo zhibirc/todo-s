@@ -28,7 +28,7 @@ button:hover {
     opacity: 0.8;
 }
 
-.button-login-cancel {
+#button-login-cancel {
     background-color: #f44336;
 }
 
@@ -42,7 +42,7 @@ span.psw {
     padding-top: 16px;
 }
 
-.modal-auth {
+#modal-auth {
     position: fixed;
     z-index: 1;
     left: 0;
@@ -55,7 +55,7 @@ span.psw {
     padding-top: 60px;
 }
 
-.modal-auth__content {
+#modal-auth-content {
     background-color: #fefefe;
     margin: 5% auto 15% auto;
     border: 1px solid #888;
@@ -75,8 +75,17 @@ span.psw {
 
 .close:hover,
 .close:focus {
-    color: red;
+    color: #f00;
     cursor: pointer;
+}
+
+#login-error-info {
+    color: #f00;
+    font-size: 12px;
+    text-align: center;
+    position: absolute;
+    top: 20px;
+    width: calc(100% - 68px);
 }
 
 .animate {
@@ -101,7 +110,7 @@ span.psw {
         float: none;
     }
 
-    .button-login-cancel {
+    #button-login-cancel {
         width: 100%;
     }
 }

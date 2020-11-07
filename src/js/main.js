@@ -9,6 +9,8 @@ import storage from './utils/storage.js';
 import app from './app.js';
 import request from "./utils/request.js";
 
+window.app = app;
+
 const views = {
     accessPublic:  'src/views/public/index.html',
     accessPrivate: 'src/views/private/index.html'
@@ -29,11 +31,12 @@ app.addListeners({
 
 if ( storage.userInfo ) {
     app.dom.body.classList.add(`ui-theme-${app.data.storage.theme}`);
-    app.load();
+    app.initWindowEvents();
 } else {
     request('GET', views.accessPublic, (text, status) => {
         if ( status === 200 ) {
             app.dom.$app.innerHTML = text;
+            app.initWindowEvents();
         }
     });
 }

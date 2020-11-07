@@ -7,9 +7,11 @@
 /**
  * Show DOM element.
  *
- * @param {Element} $element - DOM element to show
+ * @param {string|Element} value - DOM selector or DOM element to show
  */
-export function $show ( $element ) {
+export function $show ( value ) {
+    const $element = typeof value === 'string' ? $find(value) : value;
+
     $element.classList.remove('hidden');
 }
 
@@ -17,9 +19,11 @@ export function $show ( $element ) {
 /**
  * Hide DOM element.
  *
- * @param {Element} $element - DOM element to hide
+ * @param {string|Element} value - DOM selector or DOM element to hide
  */
-export function $hide ( $element ) {
+export function $hide ( value ) {
+    const $element = typeof value === 'string' ? $find(value) : value;
+
     $element.classList.add('hidden');
 }
 
