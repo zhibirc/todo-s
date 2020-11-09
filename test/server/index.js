@@ -4,9 +4,25 @@ const HOST = '127.0.0.1';
 const PORT = 3000;
 
 const server = http.createServer((request, response) => {
-    response.statusCode = 200;
-    response.setHeader('Content-Type', 'text/plain');
-    response.end('OK');
+    const {method, url, headers} = request;
+    let body = [];
+
+    request.on('error', error => {
+        console.error(error);
+    }).on('data', chunk => {
+        body.push(chunk);
+    }).on('end', () => {
+        body = Buffer.concat(body).toString();
+
+        switch ( method ) {
+            case 'GET':
+                if ( url.split('/').pop() === 'sessions') {
+                    // TODO
+                }
+
+                break;
+        }
+    });
 });
 
 server.on('listening', () => {
