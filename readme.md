@@ -29,3 +29,12 @@ In addition, it includes the following:
 - 2 color themes with trigger in UI and in application config;
 - translation in 9 languages;
 - lock/unlock UI ("Read-Only" mode);
+
+
+## Development
+
+Serve locally:
+
+```shell script
+python3 -m http.server 3000
+```

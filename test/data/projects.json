@@ -1,0 +1,46 @@
+[
+    {
+        "id": 1,
+        "name": "Home",
+        "description": "something",
+        "created": 1604158775857,
+        "tasks": [
+            {
+                "id": 3,
+                "name": "Cleaning the room",
+                "description": "something",
+                "created": 1604158777857,
+                "priority": "high"
+            },
+            {
+                "id": 4,
+                "name": "Work in the garden",
+                "description": "something",
+                "created": 1604158777857,
+                "priority": "normal"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Work",
+        "description": "something",
+        "created": 1604158775857,
+        "tasks": [
+            {
+                "id": 5,
+                "name": "Meeting",
+                "description": "something",
+                "created": 1604158777857,
+                "priority": "high"
+            },
+            {
+                "id": 6,
+                "name": "Write tests and documentation",
+                "description": "something",
+                "created": 1604158777857,
+                "priority": "low"
+            }
+        ]
+    }
+]

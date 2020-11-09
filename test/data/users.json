@@ -1,0 +1,26 @@
+[
+    {
+        "userId": 1,
+        "login": "User1",
+        "email": "user1@example.com",
+        "password": "XQ35rWqsZ68VdfTa9H3d",
+        "password": "591e2217d5f69d91f58c92f889626d251b7693a83ec5b3fc66ffa412a7c75a12",
+        "salt": "188185045f0bc2a4220118de632ac05d"
+    },
+    {
+        "userId": 2,
+        "login": "User2",
+        "email": "user2@example.com",
+        "password": "5GHV2pmqTlvrrQ9Tfnzd",
+        "password": "bfc166915567d8dae3cb0d07e22c5f8cdccf2a7530a46bef89dc78ae2f5ad7d3",
+        "salt": "7821f478736c4fa369eb9ba3d42f3da0"
+    },
+    {
+        "userId": 3,
+        "login": "User3",
+        "email": "user3@example.com",
+        "password": "HTYygy3SpwC15nFnPIUn",
+        "password": "c4e50d629cffe5760fa1e3b112fbdeb63c3cf24decb6d2d99828c99fe317abce",
+        "salt": "5dbd078beb95c468fff8d097e99121d7"
+    }
+]
