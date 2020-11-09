@@ -16,14 +16,17 @@ const views = {
 };
 
 app.addListeners({
-    'auth:success': data => {
+    'auth:success': async data => {
         console.log('AUTH::success');
 
         storage.userInfo = JSON.stringify(data);
-        app.load();
-    },
-    'auth:error': () => {
-        console.log('AUTH::error');
+
+        const response = await fetch(views.accessPrivate);
+
+        if ( response.status === 200 /* response.ok */ ) {
+            app.dom.$app.innerHTML = await response.text();
+            app.initWindowEvents();
+        }
     },
     logout: () => {
         sessionStorage.clear();

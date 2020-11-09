@@ -1,10 +1,12 @@
 /**
  * @overview Project class implementation.
- *
+ * @class
  * @module
  */
 
-export default class Project {
+import Base from './base.js';
+
+export default class Project extends Base {
     constructor ( config = {} ) {
 
     }

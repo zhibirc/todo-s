@@ -9,12 +9,12 @@ import config from './config.js';
 import Model from './models/model.js';
 import User from './models/user.js';
 
-import EventEmitter from "./utils/event.emitter.js";
+import EventEmitter from './utils/event.emitter.js';
 import validate from './utils/validate.js';
 import {$show, $hide, $find} from './utils/dom.js';
 
 import Project from './components/project.js';
-import Todo from './components/todo.js';
+import Task from './components/task.js';
 
 const auth = {};
 const noop = () => {};
