@@ -46,6 +46,7 @@ const authorize = (login, password) => {
 
 const app = new EventEmitter({
     dom: {
+        $html: document.documentElement,
         $app: $find('#app'),
         $preloader: $find('.preloader'),
         buttons: {
@@ -61,12 +62,20 @@ const app = new EventEmitter({
 });
 
 app.initWindowEvents = () => {
+    const hideModalAuth = () => {
+        $find('#modal-auth').classList.remove('is-active');
+        app.dom.$html.classList.remove('is-clipped');
+    };
+
     const handlers = {
-        'modal-auth-show':         () => $show('#modal-auth'),
-        'modal-auth':              () => $hide('#modal-auth'),
+        'modal-auth-show':         () => {
+            $find('#modal-auth').classList.add('is-active');
+            app.dom.$html.classList.add('is-clipped');
+        },
+        'modal-background':        hideModalAuth,
         'button-login':            () => app.login({login: $find('#login').value, password: $find('#password').value}),
-        'button-login-cancel':     () => $hide('#modal-auth'),
-        'button-close-modal-auth': () => $hide('#modal-auth')
+        'button-login-cancel':     hideModalAuth,
+        'button-close-modal-auth': hideModalAuth
     };
 
     window.addEventListener('click', event => (handlers[event.target.id] || noop)());

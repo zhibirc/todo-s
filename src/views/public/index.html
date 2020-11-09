@@ -5,11 +5,10 @@
         </div>
     </header>
 
-    <div id="modal-auth" class="hidden">
-        <div id="modal-auth-content" class="animate">
-            <span id="button-close-modal-auth" title="Close Modal">&times;</span>
-
-            <div class="container">
+    <div id="modal-auth" class="modal">
+        <div id="modal-background" class="modal-background"></div>
+        <div id="modal-auth-content" class="modal-content">
+            <div class="box">
                 <p id="login-error-info" class="hidden">Login or password is incorrect, be careful and try again</p>
                 <label for="login"><b>Username</b></label>
                 <input id="login" type="text" placeholder="Enter Username" required>
@@ -23,5 +22,6 @@
                 </div>
             </div>
         </div>
+        <button id="button-close-modal-auth" class="modal-close is-large" aria-label="close"></button>
     </div>
 </div>
