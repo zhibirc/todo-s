@@ -19,7 +19,7 @@ app.addListeners({
     'auth:success': async data => {
         console.log('AUTH::success');
 
-        storage.userInfo = JSON.stringify(data);
+        storage.userInfo = data;
 
         const response = await fetch(views.accessPrivate);
 

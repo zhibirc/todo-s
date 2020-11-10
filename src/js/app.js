@@ -50,7 +50,7 @@ const app = new EventEmitter({
         $app: $find('#app'),
         $preloader: $find('.preloader'),
         buttons: {
-            $createProject: $find('.button-create-project')
+            $createProject: $find('#button-create-project')
         }
     },
     data: {
@@ -61,13 +61,13 @@ const app = new EventEmitter({
     }
 });
 
+// TODO: think about Garbage Collection for pointers from obsolete views
 app.initWindowEvents = () => {
     const hideModalAuth = () => {
         $find('#modal-auth').classList.remove('is-active');
         app.dom.$html.classList.remove('is-clipped');
         // cleanup form fields
-        $find('#login').value = '';
-        $find('#password').value = '';
+        $find('#login').value = $find('#password').value = '';
     };
 
     const handlers = {
@@ -82,7 +82,8 @@ app.initWindowEvents = () => {
             $hide(app.dom.$preloader);
         },
         'button-login-cancel':     hideModalAuth,
-        'button-close-modal-auth': hideModalAuth
+        'button-close-modal-auth': hideModalAuth,
+        'button-logout':           () => app.emit('logout')
     };
 
     window.addEventListener('click', event => (handlers[event.target.id] || noop)());
@@ -94,7 +95,7 @@ app.login = async data => {
             await authorize(data.login, data.password);
 
             if ( app.events['auth:success'] ) {
-                app.emit('auth:success');
+                app.emit('auth:success', data);
             }
         } catch ( error ) {
             console.error(error);
