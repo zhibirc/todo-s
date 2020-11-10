@@ -6,7 +6,8 @@
     "private": true,
     "scripts": {
         "build": "webpack --config webpack.config.js",
-        "test": ""
+        "develop": "browser-sync start --server --config bs-config.js --logLevel debug --reload-delay 1000",
+        "test": "mocha"
     },
     "repository": {
         "type": "git",
@@ -22,8 +23,11 @@
         "bulma": "^0.9.1"
     },
     "devDependencies": {
+        "browser-sync": "^2.26.13",
+        "chai": "^4.2.0",
         "css-loader": "^5.0.1",
         "eslint": "^7.13.0",
+        "mocha": "^8.2.1",
         "nodemon": "^2.0.6",
         "style-loader": "^2.0.0",
         "webpack": "^5.4.0",

@@ -1,11 +1,15 @@
 const http = require('http');
 
 const HOST = '127.0.0.1';
-const PORT = 3000;
+const PORT = 4000;
 
 const server = http.createServer((request, response) => {
     const {method, url, headers} = request;
     let body = [];
+
+    response.statusCode = 200;
+    response.setHeader('Content-Type', 'text/plain');
+    response.end('OK');
 
     request.on('error', error => {
         console.error(error);
