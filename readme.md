@@ -27,9 +27,13 @@ In addition, it includes the following:
 
 - sort tasks by their status;
 - 2 color themes with trigger in UI and in application config;
-- translation in 9 languages;
 - lock/unlock UI ("Read-Only" mode);
 
+All tasks have three kinds of possible states:
+
+- "_new_" (means a brand-new task);
+- "_done_" (means you're a disciplined person and task is finished);
+- "_undone_" (means for some reasons the task was canceled).
 
 ## Development
 

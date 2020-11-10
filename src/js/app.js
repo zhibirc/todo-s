@@ -73,7 +73,11 @@ app.initWindowEvents = () => {
             app.dom.$html.classList.add('is-clipped');
         },
         'modal-background':        hideModalAuth,
-        'button-login':            () => app.login({login: $find('#login').value, password: $find('#password').value}),
+        'button-login':            async () => {
+            $show(app.dom.$preloader);
+            await app.login({login: $find('#login').value, password: $find('#password').value});
+            $hide(app.dom.$preloader);
+        },
         'button-login-cancel':     hideModalAuth,
         'button-close-modal-auth': hideModalAuth
     };
@@ -83,17 +87,21 @@ app.initWindowEvents = () => {
 
 app.login = async data => {
     if ( validate.login(data.login) && validate.password(data.password) ) {
-        $show(app.dom.$preloader);
-
         try {
             await authorize(data.login, data.password);
-            app.emit('auth:success');
+
+            if ( app.events['auth:success'] ) {
+                app.emit('auth:success');
+            }
         } catch ( error ) {
             console.error(error);
-            app.emit('auth:error');
-        }
 
-        $hide(app.dom.$preloader);
+            $show('#login-error-info');
+
+            if ( app.events['auth:error'] ) {
+                app.emit('auth:error');
+            }
+        }
     } else {
         $show('#login-error-info');
     }
