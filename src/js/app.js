@@ -65,6 +65,9 @@ app.initWindowEvents = () => {
     const hideModalAuth = () => {
         $find('#modal-auth').classList.remove('is-active');
         app.dom.$html.classList.remove('is-clipped');
+        // cleanup form fields
+        $find('#login').value = '';
+        $find('#password').value = '';
     };
 
     const handlers = {
