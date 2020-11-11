@@ -14,14 +14,6 @@ export default class Model {
         Object.assign(this, config);
     }
 
-    static get RESOURCE_TYPE_PROJECT () {
-        return RESOURCE_TYPE_PROJECT;
-    }
-
-    static get RESOURCE_TYPE_TODO () {
-        return RESOURCE_TYPE_TODO;
-    }
-
     remove ( resourceType, id ) {
         const resource = resourceType === Model.RESOURCE_TYPE_PROJECT ? 'Project' : 'Task';
 
@@ -82,7 +74,7 @@ export default class Model {
         });
     }
 
-    static findAll () {
+    findAll () {
         return new Promise((resolve, reject) => {
             fetch(`${config.API_BASE_PATH_URL}/getUserData`, {method: 'GET'})
                 .then(async response => {
@@ -94,5 +86,13 @@ export default class Model {
                 })
                 .catch(error => console.error(error) && reject(error));
         });
+    }
+
+    static get RESOURCE_TYPE_PROJECT () {
+        return RESOURCE_TYPE_PROJECT;
+    }
+
+    static get RESOURCE_TYPE_TODO () {
+        return RESOURCE_TYPE_TODO;
     }
 }

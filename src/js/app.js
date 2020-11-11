@@ -6,7 +6,6 @@
 
 import config from './config.js';
 
-import Model from './models/model.js';
 import User from './models/user.js';
 
 import EventEmitter from './utils/event.emitter.js';
@@ -16,7 +15,7 @@ import {$show, $hide, $find} from './utils/dom.js';
 import Project from './components/project.js';
 import Task from './components/task.js';
 
-const auth = {};
+const model = new Model();
 const noop = () => {};
 
 const authorize = (login, password) => {
@@ -35,11 +34,7 @@ const authorize = (login, password) => {
 
                 return response.json();
             })
-            .then(result => {
-                app.user = new User();
-
-                resolve(app.user);
-            })
+            .then(result => resolve(result))
             .catch(error => reject(error));
     });
 };
@@ -97,6 +92,13 @@ app.login = async data => {
             if ( app.events['auth:success'] ) {
                 app.emit('auth:success', data);
             }
+
+            app.user = new User();
+            app.user.data = await app.user.findAll();
+
+            console.log(app.user.data);
+
+            app.render();
         } catch ( error ) {
             console.error(error);
 
@@ -109,6 +111,10 @@ app.login = async data => {
     } else {
         $show('#login-error-info');
     }
+};
+
+app.render = () => {
+    // TODO: render main layout
 };
 
 /*
