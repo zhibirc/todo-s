@@ -2,7 +2,17 @@
     "name": "todo-s",
     "version": "1.0.0",
     "description": "Your daily schedule and TODO list.",
-    "author": "",
+    "author": {
+        "name": "Yaroslav Surilov",
+        "email": ""
+    },
+    "contributors": [
+        {
+            "name": "Andrii Gumich",
+            "email": "andriy.gumich@gmail.com"
+        }
+    ],
+    "funding": [],
     "private": true,
     "scripts": {
         "build": "webpack --config webpack.config.js",
