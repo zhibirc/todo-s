@@ -40,7 +40,9 @@ const authorize = (login, password) => {
     });
 };
 
-const app = new EventEmitter({
+const app = new EventEmitter();
+
+Object.assign(app, {
     views: {
         accessGuest: 'src/views/guest/index.html',
         accessUser:  'src/views/user/index.html'
@@ -75,24 +77,47 @@ app.init = view => {
                 $find('#modal-auth').classList.add('is-active');
                 app.dom.$html.classList.add('is-clipped');
             },
-            'modal-background':        hideModalAuth,
-            'button-login':            async () => {
+            'modal-background': hideModalAuth,
+            'button-login': async () => {
                 $show(app.dom.$preloader);
                 await app.login({login: $find('#login').value, password: $find('#password').value});
                 $hide(app.dom.$preloader);
             },
-            'button-login-cancel':     hideModalAuth,
-            'button-close-modal-auth': hideModalAuth
+            'button-login-cancel': hideModalAuth,
+            'modal-close':         hideModalAuth
         };
     } else {
+        app.dom.$tabs = $find('#tabs');
+
         handlers = {
             'button-create-project-form-show': () => {
                 $find('#modal-create-project').classList.add('is-active');
                 app.dom.$html.classList.add('is-clipped');
             },
-            'modal-background':        hideModal,
-            //'button-close-modal-auth': hideModalAuth,
-            'button-logout':           () => app.emit('logout')
+            'button-create-project': async () => {
+                $show(app.dom.$preloader);
+
+                const data = {
+                    name:        $find('#input-project-name'),
+                    description: $find('#input-project-description')
+                };
+
+                const project = new Project(data);
+
+                try {
+                    await app.user.create(User.RESOURCE_TYPE_PROJECT, data);
+                    app.dom.$tabs.appendChild(project.$node);
+                } catch ( exception) {
+                    console.error(exception);
+                }
+
+                hideModal();
+                $hide(app.dom.$preloader);
+            },
+            'button-cancel-project': hideModal,
+            'modal-background': hideModal,
+            'modal-close':      hideModal,
+            'button-logout':    () => app.emit('logout')
         };
     }
 

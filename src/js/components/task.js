@@ -54,7 +54,7 @@ export default class Task extends Base {
             '</div>'
         ].join('');
 
-        Object.keys(links).forEach(link => (links[links] = new DOMParser().parseFromString(links[link], 'text/html')));
+        Object.keys(links).forEach(link => (links[link] = document.createRange().createContextualFragment(links[link])));
 
         config.$node = links.$node;
         super(config);

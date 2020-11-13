@@ -30,7 +30,7 @@ export default class Project extends Base {
             `<li class="${STYLE_ACTIVE_CLASS}"><a>${config.name}</a></li>`
         ].join('');
 
-        Object.keys(links).forEach(link => (links[links] = new DOMParser().parseFromString(links[link], 'text/html')));
+        Object.keys(links).forEach(link => (links[link] = document.createRange().createContextualFragment(links[link])));
 
         config.$node = links.$node;
 
