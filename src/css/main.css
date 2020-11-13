@@ -1,4 +1,5 @@
-@import '../../node_modules/bulma/css/bulma.min.css';
+/* uncomment when implement build */
+/*@import '../../node_modules/bulma/css/bulma.min.css';*/
 @import '../views/guest/main.css';
 @import '../views/user/main.css';
 
