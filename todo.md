@@ -8,3 +8,4 @@
 - [ ] redesign
 - [ ] add API documentation
 - [ ] add Drag'n'Drop for projects (simple reorder) and for tasks (order, priority, etc.)
+- [ ] add option to set an icon for better distinguishing of different projects

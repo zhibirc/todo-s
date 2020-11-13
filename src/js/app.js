@@ -15,7 +15,6 @@ import {$show, $hide, $find} from './utils/dom.js';
 import Project from './components/project.js';
 import Task from './components/task.js';
 
-const model = new Model();
 const noop = () => {};
 
 const authorize = (login, password) => {
@@ -28,11 +27,13 @@ const authorize = (login, password) => {
             }
         })
             .then(response => {
-                if ( response.status >= 400 ) {
+                //if ( response.status >= 400 ) {
+                if ( false ) {
                     reject('Bad request');
                 }
 
-                return response.json();
+                //return response.json();
+                return [];
             })
             .then(result => resolve(result))
             .catch(error => reject(error));
@@ -40,13 +41,14 @@ const authorize = (login, password) => {
 };
 
 const app = new EventEmitter({
+    views: {
+        accessGuest: 'src/views/guest/index.html',
+        accessUser:  'src/views/user/index.html'
+    },
     dom: {
         $html: document.documentElement,
         $app: $find('#app'),
-        $preloader: $find('.preloader'),
-        buttons: {
-            $createProject: $find('#button-create-project')
-        }
+        $preloader: $find('.preloader')
     },
     data: {
         storage: {
@@ -57,31 +59,44 @@ const app = new EventEmitter({
 });
 
 // TODO: think about Garbage Collection for pointers from obsolete views
-app.initWindowEvents = () => {
-    const hideModalAuth = () => {
-        $find('#modal-auth').classList.remove('is-active');
+app.init = view => {
+    const hideModal = () => {
+        $find('.modal.is-active').classList.remove('is-active');
         app.dom.$html.classList.remove('is-clipped');
-        // cleanup form fields
-        $find('#login').value = $find('#password').value = '';
     };
 
-    const handlers = {
-        'modal-auth-show':         () => {
-            $find('#modal-auth').classList.add('is-active');
-            app.dom.$html.classList.add('is-clipped');
-        },
-        'modal-background':        hideModalAuth,
-        'button-login':            async () => {
-            $show(app.dom.$preloader);
-            await app.login({login: $find('#login').value, password: $find('#password').value});
-            $hide(app.dom.$preloader);
-        },
-        'button-login-cancel':     hideModalAuth,
-        'button-close-modal-auth': hideModalAuth,
-        'button-logout':           () => app.emit('logout')
-    };
+    let handlers;
 
-    window.addEventListener('click', event => (handlers[event.target.id] || noop)());
+    if ( view === app.views.accessGuest ) {
+        const hideModalAuth = () => hideModal() && ($find('#login').value = $find('#password').value = '');
+
+        handlers = {
+            'button-login-form-show': () => {
+                $find('#modal-auth').classList.add('is-active');
+                app.dom.$html.classList.add('is-clipped');
+            },
+            'modal-background':        hideModalAuth,
+            'button-login':            async () => {
+                $show(app.dom.$preloader);
+                await app.login({login: $find('#login').value, password: $find('#password').value});
+                $hide(app.dom.$preloader);
+            },
+            'button-login-cancel':     hideModalAuth,
+            'button-close-modal-auth': hideModalAuth
+        };
+    } else {
+        handlers = {
+            'button-create-project-form-show': () => {
+                $find('#modal-create-project').classList.add('is-active');
+                app.dom.$html.classList.add('is-clipped');
+            },
+            'modal-background':        hideModal,
+            //'button-close-modal-auth': hideModalAuth,
+            'button-logout':           () => app.emit('logout')
+        };
+    }
+
+    window.addEventListener('click', event => (handlers[event.target.id || event.target.className] || noop)());
 };
 
 app.login = async data => {
@@ -94,7 +109,8 @@ app.login = async data => {
             }
 
             app.user = new User();
-            app.user.data = await app.user.findAll();
+            //app.user.data = await app.user.findAll();
+            app.user.data = [];
 
             console.log(app.user.data);
 

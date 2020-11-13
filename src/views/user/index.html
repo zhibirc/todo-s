@@ -1,0 +1,48 @@
+<div class="view">
+    <header>
+        <div class="controls">
+            <button id="button-create-project-form-show" class="controls__create-project" title="Create new project to organize tasks semantically">+ Create Project</button>
+            <button id="button-logout" class="controls__logout">Logout</button>
+        </div>
+    </header>
+
+    <div class="tabs">
+        <ul></ul>
+    </div>
+
+    <div class="modal" id="modal-create-project">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="box">
+                <label for="input-project-name"><b>Project name</b></label>
+                <div class="field">
+                    <div class="control">
+                        <input id="input-project-name" class="input" type="text" placeholder="Enter name">
+                    </div>
+                </div>
+                <label for="input-project-description"><b>Project description</b></label>
+                <div class="field">
+                    <div class="control">
+                        <input id="input-project-description" class="input" type="text" placeholder="Enter description">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+
+    <div class="modal" id="modal-create-task">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="box">
+                <label for="input-task-description"><b>Task description</b></label>
+                <div class="field">
+                    <div class="control">
+                        <input id="input-task-description" class="input" type="text" placeholder="Enter description">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+</div>

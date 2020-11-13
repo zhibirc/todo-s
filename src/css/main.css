@@ -1,6 +1,6 @@
 @import '../../node_modules/bulma/css/bulma.min.css';
-@import '../views/public/main.css';
-@import '../views/private/main.css';
+@import '../views/guest/main.css';
+@import '../views/user/main.css';
 
 body, html {
     height: 100%;

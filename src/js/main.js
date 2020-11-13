@@ -6,14 +6,8 @@
 
 import './utils/error-interceptor.js';
 import storage from './utils/storage.js';
+import load from './utils/loader.js';
 import app from './app.js';
-
-window.app = app;
-
-const views = {
-    accessPublic:  'src/views/public/index.html',
-    accessPrivate: 'src/views/private/index.html'
-};
 
 app.addListeners({
     'auth:success': async data => {
@@ -21,14 +15,17 @@ app.addListeners({
 
         storage.userInfo = data;
 
-        const response = await fetch(views.accessPrivate);
-
-        if ( response.status === 200 /* response.ok */ ) {
-            app.dom.$app.innerHTML = await response.text();
-            app.initWindowEvents();
+        try {
+            app.dom.$app.innerHTML = await load(app.views.accessUser);
+            app.init(app.views.accessUser);
+        } catch ( exception ) {
+            console.error(exception);
+            //app.emit('logout');
         }
     },
     logout: () => {
+        console.log('LOGOUT');
+
         sessionStorage.clear();
         localStorage.clear();
         location.reload();
@@ -37,14 +34,13 @@ app.addListeners({
 
 (async () => {
     if ( storage.userInfo ) {
-        app.dom.body.classList.add(`ui-theme-${app.data.storage.theme}`);
-        app.initWindowEvents();
+        app.init(app.views.accessUser);
     } else {
-        const response = await fetch(views.accessPublic);
-
-        if ( response.status === 200 /* response.ok */ ) {
-            app.dom.$app.innerHTML = await response.text();
-            app.initWindowEvents();
+        try {
+            app.dom.$app.innerHTML = await load(app.views.accessGuest);
+            app.init(app.views.accessGuest);
+        } catch ( exception ) {
+            console.error(exception);
         }
     }
 })();

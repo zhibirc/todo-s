@@ -1,20 +1,20 @@
 <div class="view">
     <header>
         <div class="controls">
-            <button id="modal-auth-show" class="controls__modal-auth-show">Login</button>
+            <button id="button-login-form-show" class="controls__modal-auth-show">Login</button>
         </div>
     </header>
 
     <div id="modal-auth" class="modal">
-        <div id="modal-background" class="modal-background"></div>
-        <div id="modal-auth-content" class="modal-content">
+        <div class="modal-background"></div>
+        <div class="modal-content">
             <div class="box"><!-- TODO: rework to Bulma inputs later -->
                 <p id="login-error-info" class="hidden">Login or password is incorrect, be careful and try again</p>
                 <label for="login"><b>Username</b></label>
-                <input id="login" type="text" placeholder="Enter Username" required>
+                <input id="login" type="text" placeholder="Enter username" required>
 
                 <label for="password"><b>Password</b></label>
-                <input id="password" type="password" placeholder="Enter Password" required>
+                <input id="password" type="password" placeholder="Enter password" required>
 
                 <div class="controls">
                     <button id="button-login">Login</button>
