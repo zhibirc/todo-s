@@ -5,6 +5,7 @@
  */
 
 import Base from './base.js';
+import validate from '../utils/validate.js';
 
 const STYLE_ACTIVE_CLASS = 'is-active';
 const projects = [];
@@ -15,15 +16,15 @@ export default class Project extends Base {
             $node: null
         };
 
-        if ( config.name ) {
-            for ( const project of projects ) {
-                if ( project.name === config.name ) {
-                    throw new Error('Project with this name is already exists');
-                }
-            }
+        if ( !validate.project(config.name) ) {
+            throw new Error('Project must have a name');
         }
 
-        config.name = 'Unnamed';
+        for ( const project of projects ) {
+            if ( project.name === config.name ) {
+                throw new Error('Project with this name is already exists');
+            }
+        }
 
         // TODO: rework to JSX later
         links.$node = [
@@ -31,7 +32,6 @@ export default class Project extends Base {
         ].join('');
 
         Object.keys(links).forEach(link => (links[link] = document.createRange().createContextualFragment(links[link])));
-
         config.$node = links.$node;
 
         super(config);

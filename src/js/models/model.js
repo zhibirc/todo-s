@@ -54,10 +54,10 @@ export default class Model {
     }
 
     create ( resourceType, data ) {
-        const resource = resourceType === Model.RESOURCE_TYPE_PROJECT ? 'Project' : 'Task';
+        const resource = `add${resourceType === Model.RESOURCE_TYPE_PROJECT ? 'Project' : 'Task'}`;
 
         return new Promise((resolve, reject) => {
-            fetch(`${config.API_BASE_PATH_URL}/add${resource}`, {
+            fetch(`${config.API_BASE_PATH_URL}/${resource}`, {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {

@@ -95,19 +95,18 @@ app.init = view => {
                 app.dom.$html.classList.add('is-clipped');
             },
             'button-create-project': async () => {
-                $show(app.dom.$preloader);
-
                 const data = {
-                    name:        $find('#input-project-name'),
-                    description: $find('#input-project-description')
+                    name:        $find('#input-project-name').value,
+                    description: $find('#input-project-description').value
                 };
 
-                const project = new Project(data);
-
                 try {
-                    await app.user.create(User.RESOURCE_TYPE_PROJECT, data);
+                    const project = new Project(data);
+
+                    $show(app.dom.$preloader);
+                    await app.user.create(User.RESOURCE_TYPE_PROJECT, {name: project.name, description: project.description});
                     app.dom.$tabs.appendChild(project.$node);
-                } catch ( exception) {
+                } catch ( exception ) {
                     console.error(exception);
                 }
 
