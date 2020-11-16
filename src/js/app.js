@@ -5,39 +5,39 @@
  */
 
 import config from './config.js';
-
 import User from './models/user.js';
-
 import EventEmitter from './utils/event.emitter.js';
 import validate from './utils/validate.js';
 import {$show, $hide, $find} from './utils/dom.js';
-
 import Project from './components/project.js';
 import Task from './components/task.js';
 
 const noop = () => {};
 
-const authorize = (login, password) => {
+const authorize = data => {
     return new Promise((resolve, reject) => {
         fetch(`${config.API_BASE_PATH_URL}/sessions`, {
             method: 'POST',
-            body: JSON.stringify({login, password}),
+            body: JSON.stringify(data),
             headers: {
                 'Content-type': 'application/json'
             }
         })
             .then(response => {
-                //if ( response.status >= 400 ) {
-                if ( false ) {
+                if ( response.status >= 400 ) {
                     reject('Bad request');
                 }
 
-                //return response.json();
-                return [];
+                return response.json();
             })
             .then(result => resolve(result))
             .catch(error => reject(error));
     });
+};
+
+const initUser = async data => {
+    app.user = new User(data.login);
+    app.user.data = await app.user.findAll();
 };
 
 const app = new EventEmitter();
@@ -126,35 +126,45 @@ app.init = view => {
 app.login = async data => {
     if ( validate.login(data.login) && validate.password(data.password) ) {
         try {
-            await authorize(data.login, data.password);
+            const response = await authorize({login: data.login, password: data.password});
 
-            if ( app.events['auth:success'] ) {
-                app.emit('auth:success', data);
+            if ( !('sessionId' in response) ) {
+                throw new Error('Server error, check your internet connection and try again');
             }
 
-            app.user = new User();
-            //app.user.data = await app.user.findAll();
-            app.user.data = [];
+            app.emit('auth:success', {sessionId: response.sessionId});
+            await initUser();
+        } catch ( exception ) {
+            console.error(exception);
 
-            console.log(app.user.data);
-
-            app.render();
-        } catch ( error ) {
-            console.error(error);
-
-            $show('#login-error-info');
-
-            if ( app.events['auth:error'] ) {
-                app.emit('auth:error');
-            }
+            $show('#login-error-info', exception.message);
+            app.emit('auth:error');
         }
     } else {
         $show('#login-error-info');
     }
 };
 
-app.render = () => {
-    // TODO: render main layout
+app.checkLogin = async data => {
+    try {
+        const response = await authorize(data);
+
+        if ( !('logged' in response) ) {
+            throw new Error('Server error, check your internet connection and try again');
+        }
+
+        if ( response.logged ) {
+            app.emit('auth:success', data);
+            await initUser();
+        } else {
+            app.emit('logout');
+        }
+    } catch ( exception ) {
+        console.error(exception);
+
+        $show('#login-error-info', exception.message);
+        app.emit('auth:error');
+    }
 };
 
 /*

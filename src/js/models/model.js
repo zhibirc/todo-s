@@ -10,10 +10,6 @@ const RESOURCE_TYPE_PROJECT = Symbol('RESOURCE_TYPE_PROJECT');
 const RESOURCE_TYPE_TODO    = Symbol('RESOURCE_TYPE_TODO');
 
 export default class Model {
-    constructor ( config = {} ) {
-        Object.assign(this, config);
-    }
-
     remove ( resourceType, id ) {
         const resource = resourceType === Model.RESOURCE_TYPE_PROJECT ? 'Project' : 'Task';
 

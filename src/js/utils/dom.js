@@ -9,9 +9,10 @@
  *
  * @param {string|Element} value - DOM selector or DOM element to show
  */
-export function $show ( value ) {
+export function $show ( value, text ) {
     const $element = typeof value === 'string' ? $find(value) : value;
 
+    text && ($element.textContent = text);
     $element.classList.remove('hidden');
 }
 
