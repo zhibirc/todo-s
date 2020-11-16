@@ -36,6 +36,14 @@ const server = http.createServer((request, response) => {
 
         switch ( method ) {
             case 'GET':
+                if ( path.split('/').pop() === 'getUserData' ) {
+                    // TODO: check if user is authorized
+                    response.writeHead(200, {
+                        //'Access-Control-Allow-Origin': requestHeaders.origin,
+                        'Content-Type': 'application/json'
+                    });
+                    response.end(JSON.stringify(/* user data */{}));
+                }
 
                 break;
             case 'POST':
