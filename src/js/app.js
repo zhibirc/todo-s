@@ -20,7 +20,7 @@ const authorize = data => {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
-                'Content-type': 'application/json'
+                'Content-Type': 'application/json'
             }
         })
             .then(response => {
