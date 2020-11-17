@@ -1,7 +1,9 @@
 'use strict';
 
+const fs = require('fs');
 const http = require('http');
-const {v4: uuidv4} = require('uuid');
+const path = require('path');
+const {v4: getSessionId} = require('uuid');
 
 const mockUsers    = require('../data/users.json');
 const mockProjects = require('../data/projects.json');
@@ -10,14 +12,20 @@ const HOST = '127.0.0.1';
 const PORT = 4000;
 const SESSION_TIME_SECONDS = 900;
 
-const sessions = {};
+const SITE_ROOT = path.join(__dirname, '../..');
 
-const getSessionId = () => {
-    return uuidv4();
+const fileExtensions = {
+    html: 'text/html',
+    css:  'text/css',
+    js:   'text/javascript',
+    png:  'image/png',
+    jpg:  'image/jpg'
 };
 
+const sessions = {};
+
 const server = http.createServer((request, response) => {
-    const {method, url: path, headers: requestHeaders} = request;
+    const {method, url: resourceUrl, headers: requestHeaders} = request;
 
     let requestData = [];
 
@@ -30,24 +38,32 @@ const server = http.createServer((request, response) => {
 
         console.log('--------- request ---------');
         console.log('Method: ', method);
-        console.log('Path: ', path);
-        console.log('Request headers: ', requestHeaders);
-        console.log('Incoming data: ', requestData);
+        console.log('Path: ', resourceUrl);
+        //console.log('Request headers: ', requestHeaders);
+        //console.log('Incoming data: ', requestData);
 
         switch ( method ) {
             case 'GET':
-                if ( path.split('/').pop() === 'getUserData' ) {
+                if ( resourceUrl.split('/').pop() === 'getUserData' ) {
                     // TODO: check if user is authorized
                     response.writeHead(200, {
                         //'Access-Control-Allow-Origin': requestHeaders.origin,
                         'Content-Type': 'application/json'
                     });
                     response.end(JSON.stringify(/* user data */{}));
+                } else {
+                    const url = resourceUrl === '/' ? 'index.html' : resourceUrl;
+
+                    // TODO: handle existing of requested files
+                    response.writeHead(200, {
+                        'Content-Type': fileExtensions[path.extname(url).slice(1)]
+                    });
+                    response.end(fs.readFileSync(path.join(SITE_ROOT, url)));
                 }
 
                 break;
             case 'POST':
-                if ( path.split('/').pop() === 'sessions' ) {
+                if ( resourceUrl.split('/').pop() === 'sessions' ) {
                     try {
                         requestData = JSON.parse(requestData);
                     } catch ( exception ) {
