@@ -17,6 +17,7 @@ app.addListeners({
         storage.userInfo = data;
 
         try {
+            await app.initUser(data);
             app.dom.$app.innerHTML = await load(app.views.accessUser);
             app.init(app.views.accessUser);
         } catch ( exception ) {

@@ -11,5 +11,9 @@ export default class User extends Model {
         super();
 
         this.name = config.name;
+
+        Object.defineProperty(this, 'sessionId', {
+            value: config.sessionId
+        });
     }
 }

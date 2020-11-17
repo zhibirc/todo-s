@@ -14,14 +14,8 @@ body {
     overflow: hidden;
 }
 
-header {
+.navbar {
     background: rgba(0, 0, 0, 0.7);
-    height: 100px;
-    line-height: 100px;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
 }
 
 button {

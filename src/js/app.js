@@ -35,11 +35,6 @@ const authorize = data => {
     });
 };
 
-const initUser = async data => {
-    app.user = new User({name: data.login});
-    app.user.data = await app.user.findAll();
-};
-
 const app = new EventEmitter();
 
 Object.assign(app, {
@@ -69,8 +64,7 @@ app.login = async data => {
                 throw new Error('Server error, check your internet connection and try again');
             }
 
-            await initUser(data);
-            app.emit('auth:success', {sessionId: response.sessionId});
+            app.emit('auth:success', {name: data.login, sessionId: response.sessionId});
         } catch ( exception ) {
             console.error(exception);
 
@@ -102,6 +96,11 @@ app.checkLogin = async data => {
         $show('#login-error-info', exception.message);
         app.emit('auth:error');
     }
+};
+
+app.initUser = async data => {
+    app.user = new User(data);
+    app.user.data = await app.user.findAll();
 };
 
 // TODO: think about Garbage Collection for pointers from obsolete views
@@ -169,7 +168,7 @@ app.init = view => {
         };
     }
 
-    window.addEventListener('click', event => (handlers[event.target.id || event.target.className] || noop)());
+    window.addEventListener('click', event => (handlers[event.target.id || event.target.classList[0]] || noop)());
 };
 
 /*

@@ -1,27 +1,31 @@
-<div class="view">
-    <header>
-        <div class="controls">
-            <button id="button-login-form-show" class="controls__modal-auth-show">Login</button>
-        </div>
-    </header>
-
-    <div id="modal-auth" class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="box"><!-- TODO: rework to Bulma inputs later -->
-                <p id="login-error-info" class="hidden">Login or password is incorrect, be careful and try again</p>
-                <label for="login"><b>Username</b></label>
-                <input id="login" type="text" placeholder="Enter username" required>
-
-                <label for="password"><b>Password</b></label>
-                <input id="password" type="password" placeholder="Enter password" required>
-
-                <div class="controls">
-                    <button id="button-login">Login</button>
-                    <button id="button-login-cancel">Cancel</button>
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+    <div class="navbar-menu">
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <button id="button-login-form-show" class="button is-success">Login</button>
                 </div>
             </div>
         </div>
-        <button class="modal-close is-large" aria-label="close"></button>
     </div>
+</nav>
+
+<div id="modal-auth" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box"><!-- TODO: rework to Bulma inputs later -->
+            <p id="login-error-info" class="hidden">Login or password is incorrect, be careful and try again</p>
+            <label for="login"><b>Username</b></label>
+            <input id="login" type="text" placeholder="Enter username" required>
+
+            <label for="password"><b>Password</b></label>
+            <input id="password" type="password" placeholder="Enter password" required>
+
+            <div class="controls">
+                <button id="button-login">Login</button>
+                <button id="button-login-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
 </div>

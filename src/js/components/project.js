@@ -25,11 +25,15 @@ export default class Project extends Base {
                 throw new Error('Project with this name is already exists');
             }
         }
-
-        // TODO: rework to JSX later
-        links.$node = [
-            `<li class="${STYLE_ACTIVE_CLASS}"><a>${config.name}</a></li>`
-        ].join('');
+        
+        links.$node = `
+            <li class="${STYLE_ACTIVE_CLASS}">
+                <a>
+                    <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
+                    <span>${config.name}</span>
+                </a>
+            </li>
+        `;
 
         Object.keys(links).forEach(link => (links[link] = document.createRange().createContextualFragment(links[link])));
         config.$node = links.$node;

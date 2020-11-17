@@ -22,7 +22,7 @@ export default class Task extends Base {
             $buttonSettings: null
         };
 
-        // TODO: rework to JSX later
+        // TODO: rework to JSX or template strings later
         links.$node = [
             '<div class="field">',
                 '<div class="control is-loading">',

@@ -1,8 +1,8 @@
 'use strict';
 
-const fs = require('fs');
-const http = require('http');
 const path = require('path');
+const http = require('http');
+const URL = require('url').URL;
 const browserSync = require('browser-sync').create();
 
 const {v4: getSessionId} = require('uuid');
@@ -39,7 +39,8 @@ browserSync.init({
 });
 
 const server = http.createServer((request, response) => {
-    const {method, url: resourceUrl, headers: requestHeaders} = request;
+    const {method, headers: requestHeaders} = request;
+    const resourceUrl = new URL(`http${request.connection.encrypted ? 's' : ''}://${request.headers.host}${request.url}`);
 
     let requestData = [];
 
@@ -58,13 +59,16 @@ const server = http.createServer((request, response) => {
 
         switch ( method ) {
             case 'GET':
-                if ( resourceUrl.split('/').pop() === 'getUserData' ) {
-                    // TODO: check if user is authorized
-                    response.writeHead(200, {
-                        'Access-Control-Allow-Origin': requestHeaders.origin,
-                        'Content-Type': 'application/json'
-                    });
-                    response.end(JSON.stringify(mockProjects));
+                if ( resourceUrl.pathname.split('/').pop() === 'getUserData' ) {
+                    const sessionId = resourceUrl.searchParams.get('sessionId');
+
+                    if ( sessions[sessionId] ) {
+                        response.writeHead(200, {
+                            'Access-Control-Allow-Origin': requestHeaders.origin,
+                            'Content-Type': 'application/json'
+                        });
+                        response.end(JSON.stringify(mockProjects));
+                    }
                 }/* else {
                     const url = resourceUrl === '/' ? 'index.html' : resourceUrl;
 
@@ -77,7 +81,7 @@ const server = http.createServer((request, response) => {
 
                 break;
             case 'POST':
-                if ( resourceUrl.split('/').pop() === 'sessions' ) {
+                if ( resourceUrl.pathname.split('/').pop() === 'sessions' ) {
                     try {
                         requestData = JSON.parse(requestData);
                     } catch ( exception ) {

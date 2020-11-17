@@ -71,8 +71,10 @@ export default class Model {
     }
 
     findAll () {
+        const self = this;
+
         return new Promise((resolve, reject) => {
-            fetch(`${config.API_BASE_PATH_URL}/getUserData`, {method: 'GET'})
+            fetch(`${config.API_BASE_PATH_URL}/getUserData?sessionId=${self.sessionId}`, {method: 'GET'})
                 .then(async response => {
                     if ( response.status >= 400 ) {
                         throw new Error((await response.json()).code);

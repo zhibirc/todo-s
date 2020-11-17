@@ -3,10 +3,6 @@ body {
     background: url("../../../src/img/bg.jpg") no-repeat fixed center;
 }
 
-.controls {
-    text-align: center;
-}
-
 input[type=text], input[type=password] {
     width: 100%;
     padding: 12px 20px;
