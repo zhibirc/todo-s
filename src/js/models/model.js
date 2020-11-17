@@ -80,7 +80,8 @@ export default class Model {
 
                     return response.json();
                 })
-                .catch(error => console.error(error) && reject(error));
+                .then(result => resolve(result))
+                .catch(error => reject(error));
         });
     }
 

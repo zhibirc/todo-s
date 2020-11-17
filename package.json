@@ -16,10 +16,10 @@
     "private": true,
     "scripts": {
         "build": "webpack --config webpack.config.js",
-        "develop:client": "browser-sync start --server --config bs-config.js --logLevel debug --reload-delay 1000",
-        "develop:server": "nodemon ./test/server/index.js",
+        "develop": "nodemon ./test/server/index.js",
         "test": "mocha",
-        "lint": "eslint ."
+        "lint": "eslint .",
+        "lint:fix": "eslint --fix ."
     },
     "repository": {
         "type": "git",

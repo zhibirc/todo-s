@@ -3,6 +3,8 @@
 const fs = require('fs');
 const http = require('http');
 const path = require('path');
+const browserSync = require('browser-sync').create();
+
 const {v4: getSessionId} = require('uuid');
 
 const mockUsers    = require('../data/users.json');
@@ -14,15 +16,27 @@ const SESSION_TIME_SECONDS = 900;
 
 const SITE_ROOT = path.join(__dirname, '../..');
 
-const fileExtensions = {
+// for manual handling of serving static resources (set appropriate MIME-type)
+/*const fileExtensions = {
     html: 'text/html',
     css:  'text/css',
     js:   'text/javascript',
     png:  'image/png',
     jpg:  'image/jpg'
-};
+};*/
 
 const sessions = {};
+
+browserSync.emitter.on('init', () => console.log('BrowserSync is running!'));
+['*.html', '*.css', '*.js'].forEach(mask => browserSync.watch(mask).on('change', browserSync.reload));
+browserSync.init({
+    server: SITE_ROOT,
+    // show additional info
+    logLevel: 'debug',
+    // reduce start-up time
+    online: false,
+    reloadDelay: 1000
+});
 
 const server = http.createServer((request, response) => {
     const {method, url: resourceUrl, headers: requestHeaders} = request;
@@ -47,11 +61,11 @@ const server = http.createServer((request, response) => {
                 if ( resourceUrl.split('/').pop() === 'getUserData' ) {
                     // TODO: check if user is authorized
                     response.writeHead(200, {
-                        //'Access-Control-Allow-Origin': requestHeaders.origin,
+                        'Access-Control-Allow-Origin': requestHeaders.origin,
                         'Content-Type': 'application/json'
                     });
-                    response.end(JSON.stringify(/* user data */{}));
-                } else {
+                    response.end(JSON.stringify(mockProjects));
+                }/* else {
                     const url = resourceUrl === '/' ? 'index.html' : resourceUrl;
 
                     // TODO: handle existing of requested files
@@ -59,7 +73,7 @@ const server = http.createServer((request, response) => {
                         'Content-Type': fileExtensions[path.extname(url).slice(1)]
                     });
                     response.end(fs.readFileSync(path.join(SITE_ROOT, url)));
-                }
+                }*/
 
                 break;
             case 'POST':
@@ -89,8 +103,8 @@ const server = http.createServer((request, response) => {
                         }
                     }
 
-                    //response.statusCode = 404;
-                    //response.end();
+                    response.statusCode = 404;
+                    response.end();
                 }
 
                 break;

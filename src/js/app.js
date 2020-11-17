@@ -36,7 +36,7 @@ const authorize = data => {
 };
 
 const initUser = async data => {
-    app.user = new User(data.login);
+    app.user = new User({name: data.login});
     app.user.data = await app.user.findAll();
 };
 
@@ -59,6 +59,50 @@ Object.assign(app, {
         runtime: null
     }
 });
+
+app.login = async data => {
+    if ( validate.login(data.login) && validate.password(data.password) ) {
+        try {
+            const response = await authorize({login: data.login, password: data.password});
+
+            if ( !('sessionId' in response) ) {
+                throw new Error('Server error, check your internet connection and try again');
+            }
+
+            await initUser(data);
+            app.emit('auth:success', {sessionId: response.sessionId});
+        } catch ( exception ) {
+            console.error(exception);
+
+            $show('#login-error-info', exception.message);
+            app.emit('auth:error');
+        }
+    } else {
+        $show('#login-error-info');
+    }
+};
+
+app.checkLogin = async data => {
+    try {
+        const response = await authorize(data);
+
+        if ( !('logged' in response) ) {
+            throw new Error('Server error, check your internet connection and try again');
+        }
+
+        if ( response.logged ) {
+            app.emit('auth:success', data);
+            await initUser();
+        } else {
+            app.emit('logout');
+        }
+    } catch ( exception ) {
+        console.error(exception);
+
+        $show('#login-error-info', exception.message);
+        app.emit('auth:error');
+    }
+};
 
 // TODO: think about Garbage Collection for pointers from obsolete views
 app.init = view => {
@@ -88,6 +132,11 @@ app.init = view => {
         };
     } else {
         app.dom.$tabs = $find('#tabs');
+
+        app.user.data.forEach(item => {
+            const project = new Project({name: item.name, description: item.description});
+            app.dom.$tabs.appendChild(project.$node);
+        });
 
         handlers = {
             'button-create-project-form-show': () => {
@@ -121,50 +170,6 @@ app.init = view => {
     }
 
     window.addEventListener('click', event => (handlers[event.target.id || event.target.className] || noop)());
-};
-
-app.login = async data => {
-    if ( validate.login(data.login) && validate.password(data.password) ) {
-        try {
-            const response = await authorize({login: data.login, password: data.password});
-
-            if ( !('sessionId' in response) ) {
-                throw new Error('Server error, check your internet connection and try again');
-            }
-
-            app.emit('auth:success', {sessionId: response.sessionId});
-            await initUser();
-        } catch ( exception ) {
-            console.error(exception);
-
-            $show('#login-error-info', exception.message);
-            app.emit('auth:error');
-        }
-    } else {
-        $show('#login-error-info');
-    }
-};
-
-app.checkLogin = async data => {
-    try {
-        const response = await authorize(data);
-
-        if ( !('logged' in response) ) {
-            throw new Error('Server error, check your internet connection and try again');
-        }
-
-        if ( response.logged ) {
-            app.emit('auth:success', data);
-            await initUser();
-        } else {
-            app.emit('logout');
-        }
-    } catch ( exception ) {
-        console.error(exception);
-
-        $show('#login-error-info', exception.message);
-        app.emit('auth:error');
-    }
 };
 
 /*
