@@ -39,3 +39,18 @@ export function $hide ( value ) {
 export function $find ( selector ) {
     return document.querySelector(selector);
 }
+
+
+/**
+ *
+ * @param {string} htmlString - HTML to parse into DOM element
+ *
+ * @return {Element} created DOM element
+ */
+export function $getNodeFromString ( htmlString ) {
+    const div = document.createElement('div');
+
+    div.innerHTML = htmlString;
+
+    return div.firstElementChild;
+}

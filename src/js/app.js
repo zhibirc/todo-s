@@ -130,7 +130,9 @@ app.init = view => {
             'modal-close':         hideModalAuth
         };
     } else {
+        // TODO: implement Tabs component
         app.dom.$tabs = $find('#tabs');
+        app.dom.$tabs.addEventListener('click', event => Project.activate(event.target.parentNode));
 
         app.user.data.forEach(item => {
             const project = new Project({name: item.name, description: item.description});

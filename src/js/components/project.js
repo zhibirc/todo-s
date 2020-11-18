@@ -6,6 +6,7 @@
 
 import Base from './base.js';
 import validate from '../utils/validate.js';
+import {$getNodeFromString} from '../utils/dom.js';
 
 const STYLE_ACTIVE_CLASS = 'is-active';
 const projects = [];
@@ -25,9 +26,9 @@ export default class Project extends Base {
                 throw new Error('Project with this name is already exists');
             }
         }
-        
+
         links.$node = `
-            <li class="${STYLE_ACTIVE_CLASS}">
+            <li>
                 <a>
                     <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
                     <span>${config.name}</span>
@@ -35,7 +36,7 @@ export default class Project extends Base {
             </li>
         `;
 
-        Object.keys(links).forEach(link => (links[link] = document.createRange().createContextualFragment(links[link])));
+        Object.keys(links).forEach(link => (links[link] = $getNodeFromString(links[link])));
         config.$node = links.$node;
 
         super(config);
@@ -45,19 +46,18 @@ export default class Project extends Base {
         this.internals.description = config.description || 'No description yet';
 
         projects.push({
-            [this.name]: {
-                description: this.description,
-                $node: this.$node,
-                tasks: []
-            }
+            name:        this.name,
+            description: this.description,
+            $node:       this.$node,
+            tasks:       []
         });
 
-        links.$node.addEventListener('click', this.activate);
+        Project.activate(this.$node);
     }
 
-    activate ( event ) {
+    static activate ( $item ) {
         projects.forEach(project => project.$node.classList.remove(STYLE_ACTIVE_CLASS));
-        event.$target.classList.add(STYLE_ACTIVE_CLASS);
+        $item.classList.add(STYLE_ACTIVE_CLASS);
     }
 
     addTask ( task ) {
