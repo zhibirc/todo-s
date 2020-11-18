@@ -11,13 +11,6 @@
                 "description": "something",
                 "created": 1604158777857,
                 "priority": "high"
-            },
-            {
-                "id": 2,
-                "name": "Work in the garden",
-                "description": "something",
-                "created": 1604158777857,
-                "priority": "normal"
             }
         ]
     },
@@ -28,14 +21,14 @@
         "created": 1604158775857,
         "tasks": [
             {
-                "id": 3,
+                "id": 2,
                 "name": "Meeting",
                 "description": "something",
                 "created": 1604158777857,
                 "priority": "high"
             },
             {
-                "id": 4,
+                "id": 3,
                 "name": "Write tests and documentation",
                 "description": "something",
                 "created": 1604158777857,
@@ -50,21 +43,21 @@
         "created": 1604158555859,
         "tasks": [
             {
-                "id": 5,
+                "id": 4,
                 "name": "Make coffee",
                 "description": "something",
                 "created": 1604158777857,
                 "priority": "normal"
             },
             {
-                "id": 6,
+                "id": 5,
                 "name": "Make tea",
                 "description": "something",
                 "created": 1604158777857,
                 "priority": "high"
             },
             {
-                "id": 7,
+                "id": 6,
                 "name": "Code",
                 "description": "something",
                 "created": 1604158777857,

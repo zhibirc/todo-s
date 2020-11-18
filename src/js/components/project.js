@@ -28,7 +28,7 @@ export default class Project extends Base {
         }
 
         links.$node = `
-            <li>
+            <li data-content="${projects.length}">
                 <a>
                     <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
                     <span>${config.name}</span>
@@ -42,17 +42,16 @@ export default class Project extends Base {
         super(config);
 
         this.internals.links = links;
+        this.internals.tasks = config.tasks || [];
         this.internals.name = config.name;
         this.internals.description = config.description || 'No description yet';
 
         projects.push({
-            name:        this.name,
-            description: this.description,
+            name:        this.internals.name,
+            description: this.internals.description,
             $node:       this.$node,
-            tasks:       []
+            tasks:       this.internals.tasks
         });
-
-        Project.activate(this.$node);
     }
 
     static activate ( $item ) {
@@ -74,6 +73,10 @@ export default class Project extends Base {
 
     set name ( value ) {
         this.internals.name = value;
+    }
+
+    get tasks () {
+        return this.internals.tasks;
     }
 
     get description () {

@@ -26,7 +26,7 @@ export default class Task extends Base {
         links.$node = [
             '<div class="field">',
                 '<div class="control is-loading">',
-                    '<input class="input is-primary" type="text" placeholder="Add something new to do...">',
+                    `<input class="input is-primary" type="text" value="${config.name}" placeholder="Add something new to do...">`,
                 '</div>',
                 '<p class="buttons">',
                     links.$buttonComplete = [

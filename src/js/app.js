@@ -132,11 +132,36 @@ app.init = view => {
     } else {
         // TODO: implement Tabs component
         app.dom.$tabs = $find('#tabs');
-        app.dom.$tabs.addEventListener('click', event => Project.activate(event.target.parentNode));
+        app.dom.$tabsContent = $find('#tabs-content');
+        app.dom.$tabs.addEventListener('click', event => {
+            const $tab = event.target.closest('li');
 
-        app.user.data.forEach(item => {
-            const project = new Project({name: item.name, description: item.description});
+            Project.activate($tab);
+            [...app.dom.$tabsContent.children].forEach($hide);
+            $show($find(`section[data-content="${$tab.dataset.content}"]`));
+        });
+
+        app.user.data.forEach((project, index) => {
+            project = new Project(project);
+
+            const $section = document.createElement('section');
+            $hide($section);
+
+            $section.dataset.content = index;
+
+            project.tasks.forEach(task => {
+                task = new Task(task);
+
+                $section.appendChild(task.$node);
+            });
+
             app.dom.$tabs.appendChild(project.$node);
+            app.dom.$tabsContent.appendChild($section);
+
+            if ( index === app.user.data.length - 1 ) {
+                Project.activate(project.$node);
+                $show($section);
+            }
         });
 
         handlers = {
