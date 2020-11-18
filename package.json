@@ -16,7 +16,7 @@
     "private": true,
     "scripts": {
         "build": "webpack --config webpack.config.js",
-        "develop": "nodemon ./test/server/index.js",
+        "develop": "nodemon ./development/server/index.js",
         "test": "mocha",
         "lint": "eslint .",
         "lint:fix": "eslint --fix ."

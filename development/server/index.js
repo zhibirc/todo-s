@@ -7,14 +7,13 @@ const browserSync = require('browser-sync').create();
 
 const {v4: getSessionId} = require('uuid');
 
-const mockUsers    = require('../data/users.json');
-const mockProjects = require('../data/projects.json');
-
+const SITE_ROOT = path.join(__dirname, '../..');
 const HOST = '127.0.0.1';
 const PORT = 4000;
 const SESSION_TIME_SECONDS = 900;
 
-const SITE_ROOT = path.join(__dirname, '../..');
+const mockUsers    = require(path.join(SITE_ROOT, 'test/data/users.json'));
+const mockProjects = require(path.join(SITE_ROOT, 'test/data/projects.json'));
 
 // for manual handling of serving static resources (set appropriate MIME-type)
 /*const fileExtensions = {
