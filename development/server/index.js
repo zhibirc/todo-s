@@ -34,6 +34,8 @@ browserSync.init({
     logLevel: 'debug',
     // reduce start-up time
     online: false,
+    // reuse an existing tab that was opened
+    single: true,
     reloadDelay: 1000
 });
 
@@ -88,26 +90,42 @@ const server = http.createServer((request, response) => {
                         response.end();
                     }
 
-                    // TODO: implement checking session (sessionId in request)
-                    const {login, password} = requestData;
+                    const {login, password, sessionId} = requestData;
 
-                    // TODO: improve security and reliability
-                    for ( const user of mockUsers ) {
-                        if ( login === user.login && password === user.password ) {
-                            const sessionId = getSessionId();
-
-                            sessions[sessionId] = {login};
-
+                    if ( sessionId ) {
+                        // fixme
+                        // still valid
+                        if ( sessions[sessionId] ) {
                             response.writeHead(200, {
                                 'Access-Control-Allow-Origin': requestHeaders.origin,
                                 'Content-Type': 'application/json'
                             });
-                            response.end(JSON.stringify({sessionId}));
+                            response.end(JSON.stringify({logged: true}));
                         }
-                    }
+                    } else {
+                        // TODO: improve security and reliability
+                        for ( const user of mockUsers ) {
+                            if ( login === user.login && password === user.password ) {
+                                const sessionId = getSessionId();
 
-                    response.statusCode = 404;
-                    response.end();
+                                sessions[sessionId] = {login};
+
+                                response.writeHead(200, {
+                                    'Access-Control-Allow-Origin': requestHeaders.origin,
+                                    'Content-Type': 'application/json'
+                                });
+                                response.end(JSON.stringify({sessionId}));
+                            }
+                        }
+
+                        response.statusCode = 404;
+                        response.end();
+                    }
+                } else if ( resourceUrl.pathname.split('/').pop() === 'addProject' ) {
+                    response.writeHead(200, {
+                        'Access-Control-Allow-Origin': requestHeaders.origin
+                    });
+                    response.end(JSON.stringify({}));
                 }
 
                 break;

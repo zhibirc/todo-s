@@ -86,7 +86,6 @@ app.checkLogin = async data => {
 
         if ( response.logged ) {
             app.emit('auth:success', data);
-            await initUser();
         } else {
             app.emit('logout');
         }

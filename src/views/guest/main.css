@@ -3,15 +3,6 @@ body {
     background: url("../../../src/img/bg.jpg") no-repeat fixed center;
 }
 
-input[type=text], input[type=password] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
-
 button {
     background-color: #4CAF50;
     font-size: 20px;
@@ -22,10 +13,6 @@ button {
 
 button:hover {
     opacity: 0.8;
-}
-
-#button-login-cancel {
-    background-color: #f44336;
 }
 
 #login-error-info {
