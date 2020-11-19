@@ -53,7 +53,7 @@ export default class Task extends Base {
                     links.$buttonRemove = [
                         '<button class="button" title="Remove task">',
                             '<span class="icon is-small">',
-                                '<i class="fas fa-ban"></i>',
+                                '<i class="fas fa-trash-alt"></i>',
                             '</span>',
                         '</button>'
                     ].join(''),
