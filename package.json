@@ -15,8 +15,9 @@
     "funding": [],
     "private": true,
     "scripts": {
-        "build": "webpack --config webpack.config.js",
-        "develop": "nodemon ./development/server/index.js",
+        "build:develop": "MODE=development webpack",
+        "build": "MODE=production webpack",
+        "develop": "npm run build:develop && nodemon ./development/server/index.js",
         "test": "mocha",
         "lint": "eslint .",
         "lint:fix": "eslint --fix ."
