@@ -18,7 +18,7 @@ const outputModes = {
 };
 
 module.exports = {
-    entry: './src/js/main.js',
+    entry: './development/client/src/js/main.js',
     output: outputModes[process.env.NODE_ENV],
     module: {
         rules: [

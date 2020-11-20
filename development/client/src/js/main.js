@@ -40,8 +40,6 @@ app.addListeners({
         let userInfo = await storage.getUserInfo();
 
         if ( userInfo ) {
-            userInfo = JSON.parse(userInfo);
-
             if ( userInfo.sessionId ) {
                 await app.checkLogin({login: userInfo.login, sessionId: userInfo.sessionId});
             } else {

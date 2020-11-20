@@ -29,7 +29,7 @@ const sessions = {};
 browserSync.emitter.on('init', () => console.log('BrowserSync is running!'));
 ['*.html', '*.css', '*.js'].forEach(mask => browserSync.watch(mask).on('change', browserSync.reload));
 browserSync.init({
-    server: SITE_ROOT,
+    server: `${SITE_ROOT}/development/client`,
     // show additional info
     logLevel: 'debug',
     // reduce start-up time

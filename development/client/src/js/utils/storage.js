@@ -6,6 +6,7 @@
 
 import config from '../config.js';
 
+// TODO: there is one interesting alternative -- "PouchDB", research it later
 const localForage = require('localforage');
 
 localForage.config({
