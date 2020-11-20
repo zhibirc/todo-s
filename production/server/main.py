@@ -2,11 +2,20 @@
 The place where Web Server lives.
 """
 from aiohttp import web
-from .routes import routes
+import aiohttp_jinja2
+import jinja2
+
+from config import *
+from routes import routes
 
 
 # create application instance
 app = web.Application()
+
+aiohttp_jinja2.setup(
+    app,
+    loader=jinja2.FileSystemLoader(f'{SERVER_ROOT}/templates')
+)
 
 # setup routes for application
 app.router.add_routes(routes)

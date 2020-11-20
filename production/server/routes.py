@@ -2,13 +2,19 @@
 Place for application routes.
 """
 from aiohttp import web
-from .config import *
+from config import *
+from views import guest, user
 
 routes = web.RouteTableDef()
 
 
+@routes.get('/')
+async def get_index(request):
+    pass
+
+
 # serve static resources (yes, nginx or apache are much better for this)
-@routes.static('/static/', STATIC_ROOT, name='static')
+#@routes.static('/static/', STATIC_ROOT, name='static')
 @routes.post(f'/api/{API_VERSION}/auth')
 async def auth(request):
     # return web.json_response()
