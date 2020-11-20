@@ -4,7 +4,7 @@
  * @module
  */
 
-import config from '../config.js';
+import config from '../config.ts';
 
 // TODO: there is one interesting alternative -- "PouchDB", research it later
 const localForage = require('localforage');

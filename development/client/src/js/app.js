@@ -4,7 +4,7 @@
  * @module
  */
 
-import config from './config.js';
+import config from './config.ts';
 import User from './models/user.js';
 import EventEmitter from './utils/event.emitter.js';
 import validate from './utils/validate.js';

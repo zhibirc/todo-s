@@ -4,7 +4,7 @@
  * @module
  */
 
-import config from '../config.js';
+import config from '../config.ts';
 
 const RESOURCE_TYPE_PROJECT = Symbol('RESOURCE_TYPE_PROJECT');
 const RESOURCE_TYPE_TODO    = Symbol('RESOURCE_TYPE_TODO');

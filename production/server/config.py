@@ -8,3 +8,4 @@ import os
 API_VERSION = 'v1'
 SERVER_ROOT = os.path.dirname(__file__)
 STATIC_ROOT = os.path.join(SERVER_ROOT, '../client')
+PORT = 9000

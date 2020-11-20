@@ -1,0 +1,4 @@
+{
+    "include": ["development/client/src/**/*"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+}

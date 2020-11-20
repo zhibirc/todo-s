@@ -10,7 +10,12 @@ routes = web.RouteTableDef()
 
 @routes.get('/')
 async def get_index(request):
-    pass
+    # return web.Response(
+    #     status=200,
+    #     text='OK',
+    #     headers={}
+    # )
+    return web.HTTPOk(text='OK')
 
 
 # serve static resources (yes, nginx or apache are much better for this)
