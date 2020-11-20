@@ -19,7 +19,7 @@ const outputModes = {
 
 module.exports = {
     entry: './src/js/main.js',
-    output: outputModes[process.env.MODE],
+    output: outputModes[process.env.NODE_ENV],
     module: {
         rules: [
             {

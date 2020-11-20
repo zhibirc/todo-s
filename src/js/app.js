@@ -39,8 +39,8 @@ const app = new EventEmitter();
 
 Object.assign(app, {
     views: {
-        accessGuest: 'src/views/guest/index.html',
-        accessUser:  'src/views/user/index.html'
+        accessGuest: '../../../src/views/guest/index.html',
+        accessUser:  '../../../src/views/user/index.html'
     },
     dom: {
         $html: document.documentElement,

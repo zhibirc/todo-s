@@ -14,7 +14,7 @@ app.addListeners({
     'auth:success': async data => {
         console.log('AUTH::success');
 
-        storage.userInfo = data;
+        await storage.setUserInfo(data);
 
         try {
             await app.initUser(data);
@@ -37,15 +37,17 @@ app.addListeners({
 
 (async () => {
     try {
-        if ( storage.userInfo ) {
-            const userInfo = JSON.parse(storage.userInfo);
+        let userInfo = await storage.getUserInfo();
+
+        if ( userInfo ) {
+            userInfo = JSON.parse(userInfo);
 
             if ( userInfo.sessionId ) {
                 await app.checkLogin({login: userInfo.login, sessionId: userInfo.sessionId});
             } else {
                 const data = {
-                    [config.STORAGE_KEY_USER_INFO]: storage.userInfo,
-                    [config.STORAGE_KEY_APP_DATA]: storage.appData
+                    [config.STORAGE_KEY_USER_INFO]: userInfo,
+                    [config.STORAGE_KEY_APP_DATA]: await storage.getAppData()
                 };
 
                 throw new Error(`Local storage data is corrupt: ${JSON.stringify(data)}`);
@@ -56,7 +58,7 @@ app.addListeners({
             app.init(app.views.accessGuest);
         }
     } catch ( exception ) {
-        // local storage data is corrupt
+        // storage data is corrupt
         console.error(exception);
 
         sessionStorage.clear();

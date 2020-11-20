@@ -15,8 +15,8 @@
     "funding": [],
     "private": true,
     "scripts": {
-        "build:develop": "MODE=development webpack",
-        "build": "MODE=production webpack",
+        "build:develop": "cross-env NODE_ENV=development webpack",
+        "build": "cross-env NODE_ENV=production webpack",
         "develop": "npm run build:develop && nodemon ./development/server/index.js",
         "test": "mocha",
         "lint": "eslint .",
@@ -39,6 +39,7 @@
     "devDependencies": {
         "browser-sync": "^2.26.13",
         "chai": "^4.2.0",
+        "cross-env": "^7.0.2",
         "css-loader": "^5.0.1",
         "eslint": "^7.13.0",
         "mocha": "^8.2.1",

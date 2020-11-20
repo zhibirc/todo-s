@@ -1,46 +1,45 @@
 /**
- * @overview Convenient implementation for working with Local Storage.
+ * @overview Convenient implementation for working with browser storage as offline database backend.
  *
  * @module
  */
 
 import config from '../config.js';
 
+const localForage = require('localforage');
+
+localForage.config({
+    driver: localForage.INDEXEDDB,
+    name: config.PRODUCT_NAME,
+    version: 1.0,
+    // size of database, in bytes, WebSQL-only for now
+    //size: 4980736,
+    // should be alphanumeric, with underscores
+    //storeName: 'keyvaluepairs',
+    description: 'User data storage/database for buffering/runtime or fully offline working mode.'
+});
+
 const storage = {
-    get userInfo () {
-        return localStorage.getItem(config.STORAGE_KEY_USER_INFO);
-    },
+    getUserInfo: async () => localForage.getItem(config.STORAGE_KEY_USER_INFO),
 
-    set userInfo ( value ) {
-        if ( Object.prototype.toString.call(value) !== '[object Object]' ) {
-            throw new Error('Saved data should be Object');
-        }
+    setUserInfo: async value => await localForage.setItem(config.STORAGE_KEY_USER_INFO, value),
 
-        localStorage.setItem(config.STORAGE_KEY_USER_INFO, JSON.stringify(value));
-    },
+    getAppData: async () => localForage.getItem(config.STORAGE_KEY_APP_DATA),
 
-    get appData () {
-        return localStorage.getItem(config.STORAGE_KEY_APP_DATA);
-    },
-
-    set appData ( value ) {
-        if ( Object.prototype.toString.call(value) !== '[object Object]' ) {
-            throw new Error('Saved data should be Object');
-        }
-
+    setAppData: async value => {
         let appData = this.appData;
 
         try {
             appData = JSON.parse(appData);
-        } catch ( error ) {
+        } catch ( exception ) {
             appData = {};
 
-            console.error(error);
+            console.error(exception);
         }
 
-        localStorage.setItem(
+        await localForage.setItem(
             config.STORAGE_KEY_APP_DATA,
-            Object.assign(appData, JSON.stringify(value))
+            Object.assign(appData, value)
         );
     }
 };
