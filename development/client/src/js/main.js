@@ -6,7 +6,7 @@
 
 import './utils/error-interceptor.js';
 import config from './config.ts';
-import storage from './utils/storage.js';
+import storage from './utils/storage.ts';
 import load from './utils/loader.js';
 import app from './app.js';
 
