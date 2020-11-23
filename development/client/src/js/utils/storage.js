@@ -42,6 +42,11 @@ const storage = {
             config.STORAGE_KEY_APP_DATA,
             Object.assign(appData, value)
         );
+    },
+
+    clear: async () => {
+        sessionStorage.clear();
+        await localForage.clear();
     }
 };
 

@@ -26,11 +26,8 @@ app.addListeners({
         }
     },
     'auth:error': error => {},
-    logout: () => {
-        console.log('LOGOUT');
-
-        sessionStorage.clear();
-        localStorage.clear();
+    logout: async () => {
+        await storage.clear();
         location.reload();
     }
 });
@@ -59,8 +56,7 @@ app.addListeners({
         // storage data is corrupt
         console.error(exception);
 
-        sessionStorage.clear();
-        localStorage.clear();
+        await storage.clear();
         app.dom.$app.innerHTML = await load(app.views.accessGuest);
         app.init(app.views.accessGuest);
     }

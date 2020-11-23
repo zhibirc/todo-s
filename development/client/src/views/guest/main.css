@@ -3,18 +3,6 @@ body {
     background: url("../../../src/img/bg.jpg") no-repeat fixed center;
 }
 
-button {
-    background-color: #4CAF50;
-    font-size: 20px;
-    color: #fefefe;
-    padding: 8px;
-    width: 200px;
-}
-
-button:hover {
-    opacity: 0.8;
-}
-
 #login-error-info {
     color: #f00;
     font-size: 12px;

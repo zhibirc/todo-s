@@ -24,43 +24,43 @@ export default class Task extends Base {
 
         // TODO: rework to JSX or template strings later
         links.$node = [
-            '<div class="field">',
+            '<div class="field is-grouped">',
                 '<div class="control is-loading">',
                     `<input class="input is-primary" type="text" value="${config.name}" placeholder="Add something new to do..." readonly>`,
                 '</div>',
                 '<p class="buttons">',
                     links.$buttonComplete = [
                         '<button class="button is-success" title="Mark as completed">',
-                            '<span class="icon is-small">',
-                                '<i class="fas fa-check"></i>',
+                            '<span class="icon">',
+                                '<i class="fas fa-check fa-lg"></i>',
                             '</span>',
                         '</button>'
                     ].join(''),
                     links.$buttonEdit = [
                         '<button class="button" title="Edit task">',
-                            '<span class="icon is-small">',
-                                '<i class="fas fa-edit"></i>',
+                            '<span class="icon">',
+                                '<i class="fas fa-edit fa-lg"></i>',
                             '</span>',
                         '</button>'
                     ].join(''),
                     links.$buttonCancel = [
                         '<button class="button" title="Cancel task">',
-                            '<span class="icon is-small">',
-                                '<i class="fas fa-ban"></i>',
+                            '<span class="icon">',
+                                '<i class="fas fa-ban fa-lg"></i>',
                             '</span>',
                         '</button>'
                     ].join(''),
                     links.$buttonRemove = [
                         '<button class="button" title="Remove task">',
-                            '<span class="icon is-small">',
-                                '<i class="fas fa-trash-alt"></i>',
+                            '<span class="icon">',
+                                '<i class="fas fa-trash-alt fa-lg"></i>',
                             '</span>',
                         '</button>'
                     ].join(''),
                     links.$buttonSettings = [
                         '<button class="button" title="Settings">',
-                            '<span class="icon is-small">',
-                                '<i class="fas fa-cogs"></i>',
+                            '<span class="icon">',
+                                '<i class="fas fa-cogs fa-lg"></i>',
                             '</span>',
                         '</button>'
                     ].join(''),
