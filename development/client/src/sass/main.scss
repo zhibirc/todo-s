@@ -1,7 +1,6 @@
-/* uncomment when implement build */
-/*@import '../../node_modules/bulma/css/bulma.min.css';*/
-@import '../views/guest/main.css';
-@import '../views/user/main.css';
+@import '../../../../node_modules/bulma/bulma';
+@import '../views/guest/main';
+//@import '../views/user/main';
 
 body, html {
     height: 100%;
@@ -51,9 +50,8 @@ button {
     display: block;
     top: 0;
     z-index: 1000;
-}
 
-    .preloader__circle {
+    &__circle {
         height: 97px;
         width: 97px;
         margin: 40vh auto;
@@ -63,7 +61,7 @@ button {
         animation: rotate 1s infinite linear;
     }
 
-    .preloader__text {
+    &__text {
         color: #fff;
         font-size: 20px;
         position: absolute;
@@ -72,3 +70,4 @@ button {
         top: 515px;
         width: 100%;
     }
+}

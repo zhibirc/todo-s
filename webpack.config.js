@@ -5,6 +5,7 @@
 'use strict';
 
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const outputModes = {
     development: {
@@ -18,8 +19,11 @@ const outputModes = {
 };
 
 module.exports = {
-    entry: './development/client/src/js/main.js',
+    entry: ['./development/client/src/js/main.js', './development/client/src/sass/main.scss'],
     output: outputModes[process.env.NODE_ENV],
+    plugins: [new MiniCssExtractPlugin({
+        filename: 'bundle.css',
+    })],
     module: {
         rules: [
             {
@@ -28,9 +32,22 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
-            }
+                test: /\.(png|jpe?g|gif)$/,
+                use: 'file-loader',
+            },
+            {
+                test: /\.s[ac]ss$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: './',
+                        }
+                    },
+                    'css-loader',
+                    'sass-loader'
+                ],
+            },
         ]
     },
     resolve: {
