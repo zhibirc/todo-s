@@ -15,7 +15,7 @@ const outputModes = {
     },
     production:  {
         filename: 'bundle.min.js',
-        path: path.resolve(__dirname, './production/client/')
+        path: path.resolve(__dirname, './production/static/')
     }
 };
 

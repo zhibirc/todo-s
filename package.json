@@ -15,9 +15,10 @@
     "funding": [],
     "private": true,
     "scripts": {
-        "build:develop": "cross-env NODE_ENV=development webpack",
         "build": "cross-env NODE_ENV=production webpack",
-        "develop": "npm run build:develop && nodemon ./development/server/index.js",
+        "start": "npm run build && ./production/setup.sh",
+        "build:develop": "cross-env NODE_ENV=development webpack",
+        "start:develop": "npm run build:develop && nodemon ./development/server/index.js",
         "test": "mocha",
         "lint": "eslint .",
         "lint:fix": "eslint --fix ."
