@@ -6,6 +6,7 @@
 
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const outputModes = {
     development: {
@@ -21,9 +22,6 @@ const outputModes = {
 module.exports = {
     entry: ['./development/client/src/js/main.js', './development/client/src/sass/main.scss'],
     output: outputModes[process.env.NODE_ENV],
-    plugins: [new MiniCssExtractPlugin({
-        filename: 'bundle.css',
-    })],
     module: {
         rules: [
             {
@@ -50,6 +48,17 @@ module.exports = {
             },
         ]
     },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'bundle.css',
+        }),
+        new HtmlWebpackPlugin({
+            inject: false,
+            hash: true,
+            template: './development/client/index.html',
+            filename: 'index.html'
+        })
+    ],
     resolve: {
         extensions: [ '.tsx', '.ts', '.js' ],
     }
