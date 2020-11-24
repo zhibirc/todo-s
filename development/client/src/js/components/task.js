@@ -13,6 +13,8 @@ const TASK_PRIORITY_LOW    = Symbol('TASK_PRIORITY_LOW');
 const TASK_PRIORITY_NORMAL = Symbol('TASK_PRIORITY_NORMAL');
 const TASK_PRIORITY_HIGH   = Symbol('TASK_PRIORITY_HIGH');
 
+let idCount = 0;
+
 export default class Task extends Base {
     constructor ( config = {} ) {
         const links = {
@@ -24,7 +26,7 @@ export default class Task extends Base {
 
         // TODO: rework to JSX or template strings later
         links.$node = [
-            '<div class="field is-grouped">',
+            `<div class="field is-grouped" data-id="${config.id || idCount++}">`,
                 '<div class="control is-loading">',
                     `<input class="input is-primary" type="text" value="${config.name}" placeholder="Add something new to do..." readonly>`,
                 '</div>',

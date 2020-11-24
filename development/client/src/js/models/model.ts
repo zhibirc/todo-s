@@ -4,13 +4,13 @@
  * @module
  */
 
-import config from '../config.ts';
+import config from '../config';
 
 const RESOURCE_TYPE_PROJECT = Symbol('RESOURCE_TYPE_PROJECT');
 const RESOURCE_TYPE_TODO    = Symbol('RESOURCE_TYPE_TODO');
 
 export default class Model {
-    remove ( resourceType, id ) {
+    remove ( resourceType: symbol, id: number ) {
         const resource = resourceType === Model.RESOURCE_TYPE_PROJECT ? 'Project' : 'Task';
 
         return new Promise((resolve, reject) => {
@@ -22,11 +22,14 @@ export default class Model {
 
                     return response;
                 })
-                .catch(error => console.error(error) && reject(error));
+                .catch(error => {
+                    console.error(error);
+                    reject(error);
+                });
         });
     }
 
-    update ( resourceType, data ) {
+    update ( resourceType: symbol, data: object ) {
         const resource = resourceType === Model.RESOURCE_TYPE_PROJECT ? 'Project' : 'Task';
 
         return new Promise((resolve, reject) => {
@@ -45,11 +48,14 @@ export default class Model {
 
                     return response.json();
                 })
-                .catch(error => console.error(error) && reject(error));
+                .catch(error => {
+                    console.error(error);
+                    reject(error);
+                });
         });
     }
 
-    create ( resourceType, data ) {
+    create ( resourceType: symbol, data: object ) {
         const resource = `add${resourceType === Model.RESOURCE_TYPE_PROJECT ? 'Project' : 'Task'}`;
 
         return new Promise((resolve, reject) => {
