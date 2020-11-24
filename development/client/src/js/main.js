@@ -5,9 +5,9 @@
  */
 
 import './utils/error-interceptor.js';
-import config from './config.ts';
-import storage from './utils/storage.ts';
-import load from './utils/loader.js';
+import config from './config';
+import storage from './utils/storage';
+import load from './utils/loader';
 import app from './app.js';
 
 app.addListeners({
@@ -29,6 +29,9 @@ app.addListeners({
     logout: async () => {
         await storage.clear();
         location.reload();
+    },
+    'work:offline': async () => {
+        console.log('work:offline request');
     }
 });
 

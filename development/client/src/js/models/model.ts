@@ -81,6 +81,8 @@ export default class Model {
         const self = this;
 
         return new Promise((resolve, reject) => {
+            // fixme
+            /* @ts-ignore */
             fetch(`${config.API_BASE_PATH_URL}/getUserData?sessionId=${self.sessionId}`, {method: 'GET'})
                 .then(async response => {
                     if ( response.status >= 400 ) {

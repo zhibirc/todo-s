@@ -13,7 +13,7 @@ body {
     overflow: hidden;
 }
 
-.navbar {
+.hero {
     background: rgba(0, 0, 0, 0.7);
 }
 
@@ -23,6 +23,12 @@ button {
 
 .hidden {
     display: none !important;
+}
+
+.button-common-actions {
+    position: fixed;
+    bottom: 45px;
+    right: 24px;
 }
 
 

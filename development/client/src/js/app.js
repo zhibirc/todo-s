@@ -4,8 +4,8 @@
  * @module
  */
 
-import config from './config.ts';
-import User from './models/user.js';
+import config from './config';
+import User from './models/user';
 import EventEmitter from './utils/event.emitter.js';
 import validate from './utils/validate.js';
 import {$show, $hide, $find} from './utils/dom.js';
@@ -119,14 +119,25 @@ app.init = view => {
                 $find('#modal-auth').classList.add('is-active');
                 app.dom.$html.classList.add('is-clipped');
             },
+            'button-work-offline-info-show': () => {
+                $find('#modal-accept-offline').classList.add('is-active');
+                app.dom.$html.classList.add('is-clipped');
+            },
             'modal-background': hideModalAuth,
             'button-login': async () => {
                 $show(app.dom.$preloader);
                 await app.login({login: $find('#login').value, password: $find('#password').value});
                 $hide(app.dom.$preloader);
             },
-            'button-login-cancel': hideModalAuth,
-            'modal-close':         hideModalAuth
+            'button-offline-accept': () => {
+                $show(app.dom.$preloader);
+                app.emit('work:offline');
+                hideModal();
+                $hide(app.dom.$preloader);
+            },
+            'button-login-cancel':   hideModalAuth,
+            'button-offline-cancel': hideModal,
+            'modal-close':           hideModalAuth
         };
     } else {
         // TODO: implement Tabs component

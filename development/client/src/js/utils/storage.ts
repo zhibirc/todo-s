@@ -6,22 +6,14 @@
 
 import config from '../config';
 // TODO: there is one interesting alternative -- "PouchDB", research it later
-import * as localForage from 'localforage';
+import localForage from 'localforage';
 
 localForage.config({
     driver: localForage.INDEXEDDB,
     name: config.PRODUCT_NAME,
     version: 1.0,
-    // size of database, in bytes, WebSQL-only for now
-    //size: 4980736,
-    // should be alphanumeric, with underscores
-    //storeName: 'keyvaluepairs',
     description: 'User data storage/database for buffering/runtime or fully offline working mode.'
 });
-
-/*interface Storage {
-
-}*/
 
 const storage = {
     getUserInfo: async () : Promise<object> => localForage.getItem(config.STORAGE_KEY_USER_INFO),
