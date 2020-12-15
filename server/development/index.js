@@ -3,41 +3,37 @@
 const path = require('path');
 const http = require('http');
 const URL = require('url').URL;
-const browserSync = require('browser-sync').create();
 
 const {v4: getSessionId} = require('uuid');
+
+const {MongoClient} = require('mongodb');
 
 const SITE_ROOT = path.join(__dirname, '../..');
 const HOST = '127.0.0.1';
 const PORT = 4000;
 const SESSION_TIME_SECONDS = 900;
+const DB_CONNECTION_URI = `mongodb://localhost:27017`;
 
 const mockUsers    = require(path.join(SITE_ROOT, 'test/data/users.json'));
 const mockProjects = require(path.join(SITE_ROOT, 'test/data/projects.json'));
 
-// for manual handling of serving static resources (set appropriate MIME-type)
-/*const fileExtensions = {
-    html: 'text/html',
-    css:  'text/css',
-    js:   'text/javascript',
-    png:  'image/png',
-    jpg:  'image/jpg'
-};*/
-
+const mongoClient = new MongoClient(DB_CONNECTION_URI);
 const sessions = {};
 
-browserSync.emitter.on('init', () => console.log('BrowserSync is running!'));
-['*.html', '*.css', '*.js'].forEach(mask => browserSync.watch(mask).on('change', browserSync.reload));
-browserSync.init({
-    server: `${SITE_ROOT}/development/client`,
-    // show additional info
-    logLevel: 'debug',
-    // reduce start-up time
-    online: false,
-    // reuse an existing tab that was opened
-    single: true,
-    reloadDelay: 1000
-});
+let collectionUsers;
+let collectionProjects;
+
+(async () => {
+    try {
+        await mongoClient.connect();
+        const database = mongoClient.db('test');
+
+        collectionUsers = database.collection('users');
+        collectionProjects = database.collection('projects');
+    } catch ( error ) {
+        throw new Error(`Database error: ${JSON.stringify(error)}`);
+    }
+})();
 
 const server = http.createServer((request, response) => {
     const {method, headers: requestHeaders} = request;
@@ -157,4 +153,8 @@ server.on('error',  error => {
 
 server.listen(PORT, HOST, () => {
     console.log(`Server running at http://${HOST}:${PORT}`);
+});
+
+process.on('unhandledRejection', async () => {
+    await mongoClient.close();
 });
